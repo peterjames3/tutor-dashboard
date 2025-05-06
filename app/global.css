@@ -1,11 +1,6 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f9fa;
-}
-
-@theme inline {
-  --color-background: var(--background);
   /* Font family */
   --font-poppins: Poppins, sans-serif;
   --font-inter: Inter, sans-serif;
@@ -14,31 +9,35 @@
   --color-background: #f8f9fa;
   --color-banner: #506d37;
   --color-primary: #041107;
-  --color-secondary: #2b9e3b;
-  --color-cardBg: #e5e5e5;
-  --color-tertiary: #e5e5e5;
+  --color-secondary: #2f4020;
+  --color-cardBg: #E5E5E5;
+  --color-tertiary: #E5E5E5;
   --color-tertiary-white: #1e2915;
-  --color-error: hsl(5, 85%, 63%);
-  --color-active-link: #4eb959;
-  --color-default-link: #b3e7b3;
-  --color-hover-link: #81d487;
-  --color-button-login-default: #2b9e3b;
-  --color-button-login-hover: #1c7f2b;
-  --color-button-login-active: #176526;
-  --color-button-login-disabled: #d9f3d8;
-  --color-button-textColor: #f8f9fa;
-  --color-button-textColor-disabled: #4eb959;
-  --color-button-textColor-hover: #f8f9fa;
-  --color-button-signout: #effaef;
+   --color-error: hsl(5, 85%, 63%);
+  --color-active-link: #4EB959;
+  --color-default-link: #B3E7B3;
+  --color-hover-link: #81D487;
+  --color-button-login-default: #2B9E3B;
+    --color-button-login-hover: #1C7F2B;
+    --color-button-login-active: #176526;
+    --color-button-login-disabled: #D9F3D8;
+    --color-button-textColor: #F8F9FA;
+    --color-button-textColor-disabled: #4EB959;
+    --color-button-textColor-hover: #F8F9FA;
+    --color-button-signout: #EFFAEF;
 
-  /* Status color */
-  --color-status-pending: #233bb2;
-  --color-status-active: #d9f3d8;
-  --color-status-completed: #b3e7b3;
-  --color-status-cancelled: #b26623;
-  --color-status-failed: #4eb959;
+    /* Status color */
+    --color-status-pending: #233BB2;
+    --color-status-active: #D9F3D8;
+    --color-status-completed: #B3E7B3;
+    --color-status-cancelled: #B26623;
+    --color-status-failed: #4EB959;
 
-  /* Font sizes */
+
+
+
+
+    /* Font sizes */
   --text-display: 2.25rem;
   --text-headline: 1.5rem;
   --text-title: 0.875rem;
@@ -66,33 +65,18 @@
   --text-label-sm: 0.6875rem;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+/* Define custom components */
+@layer components {
+  .btn-category {
+    @apply text-[13px] font-normal py-2 px-[9.1rem] rounded-[8px] text-textColor bg-tertiary;
+  }
+
+  .wrapper {
+    @apply w-full mx-auto max-w-full md:max-w-[840px] xl:max-w-[1040px] px-4 md:px-0 mt-[2rem>
+  }
 }
 
-.btn {
-  @apply px-6 py-4 rounded-lg font-medium text-sm transition-colors;
-  background-color: var(--color-button-login-default);
-  color: var(--color-button-textColor);
-}
-
-.btn:hover {
-  background-color: var(--color-button-login-hover);
-  color: var(--color-button-textColor-hover);
-}
-
-.btn:active {
-  background-color: var(--color-button-login-active);
-}
-
-.btn:disabled {
-  background-color: var(--color-button-login-disabled);
-  color: var(--color-button-textColor-disabled);
-  opacity: 0.7;
-  cursor: not-allowed;
-}
 
 /* Define custom utilities */
 
