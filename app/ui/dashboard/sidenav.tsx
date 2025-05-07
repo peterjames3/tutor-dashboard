@@ -20,7 +20,7 @@ export default function SideNav() {
         <form
           action={async () => {
             "use server";
-            await signOut();
+            // await signOut();
           }}
         >
           <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-default-link p-3 text-sm font-medium hover:bg-hover-link hover:text-primary md:flex-none md:justify-start md:p-2 md:px-3">
