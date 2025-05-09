@@ -15,8 +15,10 @@
   --color-banner: #506d37;
   --color-primary: #041107;
   --color-secondary: #2b9e3b;
+  --color-accent: #E8F9F1;
   --color-cardBg: #e5e5e5;
   --color-tertiary: #e5e5e5;
+   --color-tertiary-30: rgba(229, 229, 229, 0.3);
   --color-tertiary-white: #1e2915;
   --color-error: hsl(5, 85%, 63%);
   --color-active-link: #4eb959;
