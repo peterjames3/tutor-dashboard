@@ -148,14 +148,13 @@ async function seedEndToEndSupportStudents(client: SQLClient) {
 }
 
 export async function GET() {
+  const connectionString = process.env.POSTGRES_URL;
 
-    const connectionString = process.env.POSTGRES_URL;
-
-    if (!connectionString) {
-      return new Response("Database connection string is missing.", {
-        status: 400,
-      });
-    }
+  if (!connectionString) {
+    return new Response("Database connection string is missing.", {
+      status: 400,
+    });
+  }
   const rawClient = await db.connect();
   const client = rawClient as unknown as SQLClient;
 

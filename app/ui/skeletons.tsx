@@ -43,7 +43,7 @@ export function TutoringServicesSkeleton() {
               Student
             </th>
             <th scope="col" className="px-3 py-5 font-medium text-left">
-              Exam
+              Level
             </th>
             <th scope="col" className="px-3 py-5 font-medium text-left">
               Subject
@@ -108,7 +108,7 @@ export function EndToEndExamSupportSkeleton() {
               Subject
             </th>
             <th scope="col" className="px-3 py-5 font-medium text-left">
-              SupportType
+              Assistant
             </th>
           </tr>
         </thead>
