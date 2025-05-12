@@ -18,7 +18,7 @@ export default async function LatestExamSupport() {
           </nav>
         </div>
 
-        <table className="w-full table-auto overflow-x-auto ">
+        <table className="w-full table-auto overflow-x-scroll ">
           <thead>
             <tr>
               {[

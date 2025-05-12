@@ -15,11 +15,11 @@
   --color-banner: #506d37;
   --color-primary: #041107;
   --color-secondary: #2b9e3b;
-  --color-accent: #E8F9F1;
-  --color-accent2:#D9F3D8;
+  --color-accent: #e8f9f1;
+  --color-accent2: #d9f3d8;
   --color-cardBg: #e5e5e5;
   --color-tertiary: #e5e5e5;
-   --color-tertiary-30: rgba(229, 229, 229, 0.3);
+  --color-tertiary-30: rgba(229, 229, 229, 0.3);
   --color-tertiary-white: #1e2915;
   --color-error: hsl(5, 85%, 63%);
   --color-active-link: #4eb959;
@@ -33,6 +33,8 @@
   --color-button-textColor-disabled: #4eb959;
   --color-button-textColor-hover: #f8f9fa;
   --color-button-signout: #effaef;
+  --color-notificationBg: #151a234d;
+  --color-notification-hovered: #151a232d;
 
   /* Status color */
   --color-status-pending: #233bb2;
