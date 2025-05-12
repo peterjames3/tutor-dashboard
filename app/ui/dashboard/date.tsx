@@ -9,6 +9,6 @@ export default function CurrentDate() {
   const formattedDate = currentDate.toLocaleDateString("en-US", options);
 
   return (
-    <div className="text-primary font-medium text-lg">Date:{formattedDate}</div>
+    <div className="text-primary font-medium text-lg">Today:{formattedDate}</div>
   );
 }

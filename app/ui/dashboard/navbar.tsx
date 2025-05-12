@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
-import { Bell, ChevronDown, ChevronUp, Settings, LogOut } from "lucide-react";
+import { Bell, ChevronDown, ChevronUp } from "lucide-react";
 import Notification from "./notification";
+import UserDropdown from "./user-dropdown";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,10 +15,6 @@ export default function Navbar() {
     setIsNotificationOpen(!isnotificationOpen);
   };
 
-  const links = [
-    { name: "Settings", href: "dashboard/settings", Icon: Settings },
-    // { name: "Logout", href: "/logout", Icon: LogOut },
-  ];
 
   return (
     <header className=" flex w-full items-center justify-between px-4 py-2 bg-white border-b border-accent2">
@@ -60,24 +56,7 @@ export default function Navbar() {
           )}
           <div>
             {isOpen && (
-              <div className="absolute right-3 top-16 w-[190px] bg-notificationBg border-b border-notification-hovered rounded-lg shadow-lg ">
-                {links.map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    className="flex items-center gap-2 w-full p-4 hover:bg-notification-hovered rounded-t-lg "
-                  >
-                    <link.Icon className="text-primary" />
-                    <span className="text-label text-primary font-medium">
-                      {link.name}
-                    </span>
-                  </Link>
-                ))}
-                <div className="border-t p-4 text-error border-notification-hovered flex gap-2 items-center hover:bg-notification-hovered cursor-pointer rounded-b-lg">
-                  <LogOut className="text-error" />
-                  Logout
-                </div>
-              </div>
+              <UserDropdown />
             )}
           </div>
         </div>

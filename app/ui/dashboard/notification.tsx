@@ -37,7 +37,7 @@ export default function Notification() {
         {notifications.map((notification) => (
           <div
             key={notification.id}
-            className={`flex items-center p-2 rounded-lg hover:bg-accent2 ${
+            className={`flex items-center p-2 rounded-lg hover:bg-notification-hovered ${
               notification.read
                 ? "bg-notification-read"
                 : "bg-notification-unread"

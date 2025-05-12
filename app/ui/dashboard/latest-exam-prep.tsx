@@ -1,9 +1,9 @@
 import { RefreshCcw } from "lucide-react";
 import clsx from "clsx";
-import { fetchExamPrepSemiData } from "@/app/lib/data";
+import { fetchExamPrepSemiData, fetchCardData } from "@/app/lib/data";
 export default async function LatestExamPrep() {
   const examPrepStudents = await fetchExamPrepSemiData();
-  // const examPrepCount = await fetchCardData();
+  const examPrepCount = await fetchCardData();
   return (
     <div className="w-full flex flex-col gap-4 border border-tertiary rounded-lg ">
       <div className=" w-full px-3 py-2">
@@ -11,12 +11,12 @@ export default async function LatestExamPrep() {
           <nav className="title text-primary font-medium">Exam Prep</nav>
           <nav className=" rounded-full  px-4 py-2 bg-accent">
             <span className="text-label text-left font-normal text-primary">
-              {/* {examPrepCount.examPrepCount} students */} 14 students
+               {examPrepCount.examPrepCount} students 
             </span>
           </nav>
         </div>
-
-        <table className="w-full table-auto overflow-x-auto ">
+        <div className='w-full overflow-x-auto'>
+        <table className="w-full table-auto min-w-[800px] ">
           <thead>
             <tr>
               {["Student", "Exam", "Level"].map((header) => (
@@ -55,6 +55,7 @@ export default async function LatestExamPrep() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
       <div className="flex gap-2 items-center  pl-3 py-2">
         <button
