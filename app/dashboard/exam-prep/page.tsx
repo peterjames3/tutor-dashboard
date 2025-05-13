@@ -18,7 +18,7 @@ export default async function Page() {
           </li>
           <li>Exam Prep</li>
         </ul>
-        <h1 className=" text-xl md:text-2xl">Exam Preparation</h1>
+        <h1 className=" headline font-semibold ">Exam Preparation</h1>
         <p className="p-text">Manage all Clients information and enrollment</p>
       </header>
     </main>
