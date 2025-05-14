@@ -90,3 +90,97 @@ export const fetchEndToEndSupportSemiData = async () => {
     throw new Error("Failed to fetch exam support semi data");
   }
 };
+
+
+const ITEMS_PER_PAGE = 6;
+
+export async function fetchFilteredExamPrep(
+  query: string,
+  currentPage: number
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const students = await sql`
+      SELECT
+        id,
+        name,
+        email,
+        phone_number,
+        level,
+        exam,
+        subject,
+        exam_date,
+        assistant,
+        status
+      FROM exam_prep_students
+      WHERE
+        name ILIKE ${`%${query}%`} OR
+        email ILIKE ${`%${query}%`} OR
+        exam ILIKE ${`%${query}%`} OR
+        subject ILIKE ${`%${query}%`} OR
+        assistant ILIKE ${`%${query}%`} OR
+        status ILIKE ${`%${query}%`}
+      ORDER BY exam_date DESC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return students.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch exam prep students.");
+  }
+}
+
+export async function fetchExamPrepPages(query: string) {
+  try {
+    const count = await sql`
+      SELECT COUNT(*)
+      FROM exam_prep_students
+      WHERE
+        name ILIKE ${`%${query}%`} OR
+        email ILIKE ${`%${query}%`} OR
+        exam ILIKE ${`%${query}%`} OR
+        subject ILIKE ${`%${query}%`} OR
+        assistant ILIKE ${`%${query}%`} OR
+        status ILIKE ${`%${query}%`}
+    `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch total number of exam prep students.");
+  }
+}
+
+export async function fetchExamPrepById(id: string) {
+  try {
+    const data = await sql`
+      SELECT
+        id,
+        name,
+        email,
+        phone_number,
+        level,
+        exam,
+        subject,
+        exam_date,
+        assistant,
+        status,
+        support_type
+      FROM exam_prep_students
+      WHERE id = ${id};
+    `;
+
+    const student = data.rows.map((student) => ({
+      ...student,
+      exam_date: new Date(student.exam_date).toISOString().split('T')[0]
+    }));
+
+    return student[0];
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch exam prep student.");
+  }
+}

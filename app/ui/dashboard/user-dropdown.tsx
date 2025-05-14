@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Settings, LogOut } from "lucide-react";
 export default function UserDropdown() {
   const links = [
-    { name: "Settings", href: "dashboard/settings", Icon: Settings },
+    { name: "Settings", href: "/dashboard/settings", Icon: Settings },
   ];
 
   return (
