@@ -1,29 +1,36 @@
-import { CircleCheckBig, Clock } from "lucide-react";
+import { CircleCheckBig, Clock, Loader2 } from "lucide-react";
 import clsx from "clsx";
 
-export default function InvoiceStatus({ status }: { status: string }) {
+export default function ExamPrepStatus({ status }: { status: string }) {
   return (
     <span
       className={clsx(
-        "inline-flex items-center rounded-full px-2 py-1 text-xs",
+        "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium",
         {
-          "bg-gray-100 text-gray-500": status === "pending",
-          "bg-green-500 text-white": status === "paid",
+          "bg-yellow-100 text-yellow-800": status === "Pending",
+          "bg-blue-100 text-blue-800": status === "In Progress",
+          "bg-green-100 text-green-800": status === "Completed",
         }
       )}
     >
-      {status === "pending" ? (
+      {status === "Pending" && (
         <>
           Pending
-          <Clock className="ml-1 w-4 text-gray-500" />
+          <Clock className="ml-1 w-3 h-3" />
         </>
-      ) : null}
-      {status === "paid" ? (
+      )}
+      {status === "In Progress" && (
         <>
-          Paid
-          <CircleCheckBig className="ml-1 w-4 text-white" />
+          In Progress
+          <Loader2 className="ml-1 w-3 h-3 animate-spin" />
         </>
-      ) : null}
+      )}
+      {status === "Completed" && (
+        <>
+          Completed
+          <CircleCheckBig className="ml-1 w-3 h-3" />
+        </>
+      )}
     </span>
   );
 }

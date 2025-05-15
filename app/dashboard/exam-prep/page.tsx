@@ -6,8 +6,8 @@ import Pagination from "@/app/ui/exam-prep/pagination";
 import ExamPrepTable from "@/app/ui/exam-prep/table";
 import { CreateExamPrep } from "@/app/ui/exam-prep/button";
 import { Suspense } from "react";
-import { EndToEndExamSupportSkeleton } from "@/app/ui/skeletons";
 import { fetchExamPrepPages } from "@/app/lib/data";
+import { ExamPrepRouteSkeleton } from "@/app/ui/skeletons";
 export const metadata: Metadata = {
   title: "Exam Prep",
 };
@@ -47,7 +47,7 @@ export default async function Page({
         </div>
         <Suspense
           key={query + currentPage}
-          fallback={<EndToEndExamSupportSkeleton />}
+          fallback={<ExamPrepRouteSkeleton />}
         >
           <ExamPrepTable query={query} currentPage={currentPage} />
         </Suspense>

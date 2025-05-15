@@ -151,6 +151,98 @@ export function EndToEndExamSupportSkeleton() {
   );
 }
 
+export function ExamPrepRouteSkeleton() {
+  return (
+    <div
+      className={`${shimmer} mt-12 relative flex w-full flex-col overflow-hidden md:col-span-4`}
+    >
+      <div className="w-full t">
+        <table className=" w-full  ">
+          <thead className="rounded-lg  font-normal">
+            <tr>
+              <th
+                scope="col"
+                className="px-4 py-5 font-medium sm:pl-3 text-left"
+              >
+                Student
+              </th>
+              <th scope="col" className="px-3 py-5 font-medium text-left">
+                Phone
+              </th>
+              <th scope="col" className="px-3 py-5 font-medium text-left">
+                Level
+              </th>
+              <th scope="col" className="px-3 py-5 font-medium text-left">
+                Exam
+              </th>
+              <th scope="col" className="px-3 py-5 font-medium text-left">
+                Subject
+              </th>
+              <th scope="col" className="px-3 py-5 font-medium text-left">
+                Status
+              </th>
+              <th scope="col" className="px-3 py-5 font-medium text-left">
+                Assistant
+              </th>
+              <th scope="col" className="px-3 py-5 font-medium text-left">
+                Support Type
+              </th>
+              <th scope="col" className="px-3 py-5 font-medium text-left">
+                Exam Date
+              </th>
+              <th scope="col" className="px-3 py-5 font-medium text-left">
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white text-sm">
+            {[1, 2, 3, 4, 5].map((_, i) => (
+              <tr key={i} className="border-b border-gray-100 animate-pulse">
+                <td className="px-4 py-4 sm:pl-3">
+                  <div className="flex items-center">
+                    <div className="mr-2 h-8 w-8 rounded-full bg-gray-200" />
+                    <div className="min-w-0">
+                      <div className="h-5 w-40 rounded-md bg-gray-200" />
+                      <div className="mt-2 h-4 w-12 rounded-md bg-gray-200" />
+                    </div>
+                  </div>
+                </td>
+                <td className="px-2 py-4">
+                  <div className="h-4 w-25 rounded-md bg-gray-200" />
+                </td>
+                <td className="px-3 py-4">
+                  <div className="mt-2 h-4 w-16 rounded-md bg-gray-200" />
+                </td>
+                <td className="px-3 py-4">
+                  <div className="mt-2 h-4 w-16 rounded-md bg-gray-200" />
+                </td>
+                <td className="px-3 py-4">
+                  <div className="mt-2 h-4 w-16 rounded-md bg-gray-200" />
+                </td>
+                <td className="px-3 py-4">
+                  <div className="mt-2 h-4 w-16 rounded-md bg-gray-200" />
+                </td>
+                <td className="px-3 py-4">
+                  <div className="mt-2 h-4 w-16 rounded-md bg-gray-200" />
+                </td>
+                <td className="px-3 py-4">
+                  <div className="mt-2 h-4 w-16 rounded-md bg-gray-200" />
+                </td>
+                <td className="px-3 py-4">
+                  <div className="mt-2 h-4 w-16 rounded-md bg-gray-200" />
+                </td>
+                <td className="px-3 py-4">
+                  <div className="mt-2 h-4 w-16 rounded-md bg-gray-200" />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
 export function InvoiceSkeleton() {
   return (
     <div className="flex flex-row items-center justify-between border-b border-gray-100 py-4">

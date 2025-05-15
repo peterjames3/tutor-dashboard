@@ -91,7 +91,6 @@ export const fetchEndToEndSupportSemiData = async () => {
   }
 };
 
-
 const ITEMS_PER_PAGE = 6;
 
 export async function fetchFilteredExamPrep(
@@ -112,6 +111,7 @@ export async function fetchFilteredExamPrep(
         subject,
         exam_date,
         assistant,
+        support_type,
         status
       FROM exam_prep_students
       WHERE
@@ -175,7 +175,7 @@ export async function fetchExamPrepById(id: string) {
 
     const student = data.rows.map((student) => ({
       ...student,
-      exam_date: new Date(student.exam_date).toISOString().split('T')[0]
+      exam_date: new Date(student.exam_date).toISOString().split("T")[0],
     }));
 
     return student[0];
