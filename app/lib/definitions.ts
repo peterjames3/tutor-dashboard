@@ -23,6 +23,26 @@ export interface BaseStudent {
   supportType: SupportType;
 }
 
+export type AssistantField = {
+  id: string;
+  name: string;
+};
+
+export type ExamPrepForm = {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  level: StudentLevel;
+  startDate: Date;
+  subjectHelp: string;
+  assistant?: string;
+  status: StudentStatus;
+  supportType: "Exam Prep";
+  exam: string;
+  exam_date: Date;
+};
+
 export interface ExamSupportStudent extends BaseStudent {
   exam: string;
   examDate: Date;

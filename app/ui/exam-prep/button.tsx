@@ -17,7 +17,7 @@ export function CreateExamPrep() {
 export function UpdateExamPrep({ id }: { id: string }) {
   return (
     <Link
-      href={`/dashboard/invoices/${id}/edit`}
+      href={`/dashboard/exam-prep/${id}/edit`}
       className="rounded-md border p-2 hover:bg-gray-100"
     >
       <Pencil className="w-5" />

@@ -184,3 +184,15 @@ export async function fetchExamPrepById(id: string) {
     throw new Error("Failed to fetch exam prep student.");
   }
 }
+
+export async function fetchStudents() {
+  try {
+    const data = await sql`
+      SELECT id, name FROM exam_prep_students ORDER BY name;
+    `;
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch students.");
+  }
+}
