@@ -21,13 +21,14 @@ export default function EditExamPrepForm({
 }) {
   const initialState: State = { message: null, errors: {} };
   const updateExamPrepWithId = updateExamPrep.bind(null, student.id);
-  const [state, formAction] = useActionState(
+  const [state, formAction, isPending] = useActionState(
     updateExamPrepWithId,
     initialState
   );
 
   return (
     <form action={formAction}>
+      <input type="hidden" name="studentId" value={student.id} />
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Student Information */}
         <div className="mb-4">
@@ -152,7 +153,9 @@ export default function EditExamPrepForm({
         >
           Cancel
         </Link>
-        <Button type="submit">Update Student</Button>
+        <Button type="submit" className="btn hover:cursor-pointer">
+          {isPending ? "Updating Student ..." : "Update Student"}
+        </Button>
       </div>
     </form>
   );

@@ -1,16 +1,17 @@
 import EditExamPrepForm from "@/app/ui/exam-prep/edit-form";
 import Breadcrumbs from "@/app/ui/exam-prep/breadcrumps";
-import { fetchStudents, fetchExamPrepById } from "@/app/lib/data";
+import { fetchExamPrepById, fetchStudents } from "@/app/lib/data";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { ExamPrepForm } from "@/app/lib/definitions";
+//import { ExamPrepForm } from "@/app/lib/definitions";
 
 export const metadata: Metadata = {
   title: "Edit Exam Prep Student",
 };
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const id = params.id;
+  const  id =  params.id;
+  
 
   const [studentData, assistants] = await Promise.all([
     fetchExamPrepById(id),
@@ -33,7 +34,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           },
         ]}
       />
-      <EditExamPrepForm student={student} students={students} />
+      <EditExamPrepForm student={studentData} assistants={assistants} />
     </main>
   );
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Search from "@/app/ui/search";
 import Pagination from "@/app/ui/exam-prep/pagination";
 import ExamPrepTable from "@/app/ui/exam-prep/table";
-import { CreateExamPrep } from "@/app/ui/exam-prep/button";
+
 import { Suspense } from "react";
 import { fetchExamPrepPages } from "@/app/lib/data";
 import { ExamPrepRouteSkeleton } from "@/app/ui/skeletons";
@@ -43,7 +43,7 @@ export default async function Page({
       <div>
         <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
           <Search placeholder="Search students..." />
-          <CreateExamPrep />
+      
         </div>
         <Suspense
           key={query + currentPage}

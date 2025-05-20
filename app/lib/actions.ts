@@ -3,8 +3,8 @@ import { z } from "zod";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { signIn } from "@/auth";
-import { AuthError } from "next-auth";
+// import { signIn } from "@/auth";
+// import { AuthError } from "next-auth";
 
 const FormSchema = z.object({
   id: z.string(),
@@ -60,9 +60,12 @@ export async function updateExamPrep(
         updated_at = NOW()
       WHERE id = ${id}
     `;
-  } catch {
+  } catch (error) {
+    console.log("SQL Error in updateExamPrep:", error);
     return {
-      message: "Database Error: Failed to Update Student",
+      message: `Database Error: Failed to Update Student: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
     };
   }
 
@@ -121,21 +124,21 @@ export async function updateStudentStatus(
   }
 }
 
-export async function authenticate(
-  prevState: string | undefined,
-  formData: FormData
-) {
-  try {
-    await signIn("credentials", formData);
-  } catch (error) {
-    if (error instanceof AuthError) {
-      switch (error.type) {
-        case "CredentialsSignin":
-          return "Invalid credentials.";
-        default:
-          return "Something went wrong.";
-      }
-    }
-    throw error;
-  }
-}
+// export async function authenticate(
+//   prevState: string | undefined,
+//   formData: FormData
+// ) {
+//   try {
+//     await signIn("credentials", formData);
+//   } catch (error) {
+//     if (error instanceof AuthError) {
+//       switch (error.type) {
+//         case "CredentialsSignin":
+//           return "Invalid credentials.";
+//         default:
+//           return "Something went wrong.";
+//       }
+//     }
+//     throw error;
+//   }
+// }
