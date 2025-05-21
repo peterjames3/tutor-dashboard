@@ -185,7 +185,6 @@ export async function fetchExamPrepById(id: string) {
   }
 }
 
-
 export async function fetchStudents() {
   try {
     const data = await sql`
@@ -197,7 +196,6 @@ export async function fetchStudents() {
     throw new Error("Failed to fetch students.");
   }
 }
-
 
 export async function fetchFilteredTutoring(
   query: string,
@@ -213,28 +211,26 @@ export async function fetchFilteredTutoring(
         email,
         phone_number,
         level,
-        exam,
         subject,
-        exam_date,
+        start_date,
         assistant,
         support_type,
         status
-      FROM exam_prep_students
+      FROM tutoring_students
       WHERE
         name ILIKE ${`%${query}%`} OR
         email ILIKE ${`%${query}%`} OR
-        exam ILIKE ${`%${query}%`} OR
         subject ILIKE ${`%${query}%`} OR
         assistant ILIKE ${`%${query}%`} OR
         status ILIKE ${`%${query}%`}
-      ORDER BY exam_date DESC
+      ORDER BY start_date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
     return students.rows;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch exam prep students.");
+    throw new Error("Failed to fetch tutoring students.");
   }
 }
 
@@ -242,12 +238,11 @@ export async function fetchTutoringPages(query: string) {
   try {
     const count = await sql`
       SELECT COUNT(*)
-      FROM exam_prep_students
+      FROM tutoring_students
       WHERE
         name ILIKE ${`%${query}%`} OR
         email ILIKE ${`%${query}%`} OR
-        exam ILIKE ${`%${query}%`} OR
-        subject ILIKE ${`%${query}%`} OR
+       subject ILIKE ${`%${query}%`} OR
         assistant ILIKE ${`%${query}%`} OR
         status ILIKE ${`%${query}%`}
     `;
@@ -256,7 +251,11 @@ export async function fetchTutoringPages(query: string) {
     return totalPages;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch total number of exam prep students.");
+    return {
+      message: `Database Error: Fa Student: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    };
   }
 }
 
@@ -269,24 +268,23 @@ export async function fetchTutoringById(id: string) {
         email,
         phone_number,
         level,
-        exam,
         subject,
-        exam_date,
+        start_date,
         assistant,
         status,
         support_type
-      FROM exam_prep_students
+      FROM tutoring_students
       WHERE id = ${id};
     `;
 
     const student = data.rows.map((student) => ({
       ...student,
-      exam_date: new Date(student.exam_date).toISOString().split("T")[0],
+      start_date: new Date(student.start_date).toISOString().split("T")[0],
     }));
 
     return student[0];
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch exam prep student.");
+    throw new Error("Failed to fetch tutoring student.");
   }
 }

@@ -1,17 +1,17 @@
-import { UpdateExamPrep, DeleteExamPrep } from "@/app/ui/exam-prep/button";
+import { UpdateExamPrep, DeleteExamPrep } from "@/app/ui/tutoring/button";
 import ExamPrepStatus from "@/app/ui/exam-prep/status";
 import { formatDateToLocal } from "@/app/lib/utils";
-import { fetchFilteredExamPrep } from "@/app/lib/data";
+import { fetchFilteredTutoring } from "@/app/lib/data";
 import clsx from "clsx";
 
-export default async function ExamPrepTable({
+export default async function TutoringTable({
   query,
   currentPage,
 }: {
   query: string;
   currentPage: number;
 }) {
-  const students = await fetchFilteredExamPrep(query, currentPage);
+  const students = await fetchFilteredTutoring(query, currentPage);
 
   return (
     <div className="mt-6 border border-tertiary rounded-lg">
@@ -23,11 +23,10 @@ export default async function ExamPrepTable({
                 "Student",
                 "Phone",
                 "Level",
-                "Exam",
                 "Subject",
                 "Assistant",
                 "Support Type",
-                "Exam Date",
+                "Start Date",
                 "Status",
               ].map((header) => (
                 <th key={header} className="font-medium px-4 py-4 text-left">
@@ -68,7 +67,7 @@ export default async function ExamPrepTable({
                   {student.phone_number}
                 </td>
                 <td className="whitespace-nowrap px-3 py-3">{student.level}</td>
-                <td className="whitespace-nowrap px-3 py-3">{student.exam}</td>
+
                 <td className="whitespace-nowrap px-3 py-3">
                   {student.subject}
                 </td>
@@ -79,7 +78,7 @@ export default async function ExamPrepTable({
                   {student.support_type}
                 </td>
                 <td className="whitespace-nowrap px-3 py-3">
-                  {formatDateToLocal(student.exam_date)}
+                  {formatDateToLocal(student.start_date)}
                 </td>
                 <td className="whitespace-nowrap px-3 py-3">
                   <ExamPrepStatus status={student.status} />
