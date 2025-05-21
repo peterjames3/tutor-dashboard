@@ -142,3 +142,101 @@ export async function updateStudentStatus(
 //     throw error;
 //   }
 // }
+
+const UpdateTutoring = FormSchema.omit({ id: true, date: true });
+
+export async function updateTutoring(
+  id: string,
+  prevState: State,
+  formData: FormData
+) {
+  const validatedFields = UpdateTutoring.safeParse({
+    studentId: formData.get("studentId"),
+    assistant: formData.get("assistant"),
+    status: formData.get("status"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Update Student.",
+    };
+  }
+
+  const { assistant, status } = validatedFields.data;
+
+  try {
+    await sql`
+      UPDATE tutoring_students
+      SET 
+        assistant = ${assistant},
+        status = ${status},
+        updated_at = NOW()
+      WHERE id = ${id}
+    `;
+  } catch (error) {
+    console.log("SQL Error in updateExamPrep:", error);
+    return {
+      message: `Database Error: Failed to Update Student: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    };
+  }
+
+  revalidatePath("/dashboard/tutoring");
+  redirect("/dashboard/tutoring");
+}
+
+export async function deleteTutoring(id: string) {
+  try {
+    await sql`DELETE FROM tutoring_students WHERE id = ${id}`;
+  } catch {
+    return {
+      message: "Database Error: Failed to Delete Student",
+    };
+  }
+
+  revalidatePath("/dashboard/exam-prep");
+}
+
+export async function assignAssistantTutoring(
+  studentId: string,
+  assistantId: string
+) {
+  try {
+    await sql`
+      UPDATE tutoring_students
+      SET 
+        assistant = ${assistantId},
+        updated_at = NOW()
+      WHERE id = ${studentId}
+    `;
+    revalidatePath("/dashboard/tutoring");
+    return { success: true };
+  } catch {
+    return {
+      message: "Database Error: Failed to Assign Assistant",
+    };
+  }
+}
+
+export async function updateStudentStatusTutoring(
+  studentId: string,
+  status: "Pending" | "In Progress" | "Completed"
+) {
+  try {
+    await sql`
+      UPDATE tutoring_students
+      SET 
+        status = ${status},
+        updated_at = NOW()
+      WHERE id = ${studentId}
+    `;
+    revalidatePath("/dashboard/tutoring");
+    return { success: true };
+  } catch {
+    return {
+      message: "Database Error: Failed to Update Status",
+    };
+  }
+}

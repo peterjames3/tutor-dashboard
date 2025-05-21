@@ -1,4 +1,4 @@
-import { UpdateExamPrep, DeleteExamPrep } from "@/app/ui/tutoring/button";
+import { UpdateTutoring, DeleteTutoring } from "@/app/ui/tutoring/button";
 import ExamPrepStatus from "@/app/ui/exam-prep/status";
 import { formatDateToLocal } from "@/app/lib/utils";
 import { fetchFilteredTutoring } from "@/app/lib/data";
@@ -85,8 +85,8 @@ export default async function TutoringTable({
                 </td>
                 <td className="whitespace-nowrap py-3 pl-6 pr-3">
                   <div className="flex justify-end gap-3">
-                    <UpdateExamPrep id={student.id} />
-                    <DeleteExamPrep id={student.id} />
+                    <UpdateTutoring id={student.id} />
+                    <DeleteTutoring id={student.id} />
                   </div>
                 </td>
               </tr>

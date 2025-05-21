@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/app/ui/button";
-import { updateExamPrep, State } from "@/app/lib/actions";
+import { updateTutoring, State } from "@/app/lib/actions";
 import { useActionState } from "react";
 
 export default function EditExamPrepForm({
@@ -20,9 +20,9 @@ export default function EditExamPrepForm({
   assistants: AssistantField[];
 }) {
   const initialState: State = { message: null, errors: {} };
-  const updateExamPrepWithId = updateExamPrep.bind(null, student.id);
+  const updateTutoringWithId = updateTutoring.bind(null, student.id);
   const [state, formAction, isPending] = useActionState(
-    updateExamPrepWithId,
+    updateTutoringWithId,
     initialState
   );
 

@@ -1,27 +1,38 @@
 import { Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
-//import { deleteInvoice } from "@/app/lib/actions";
+import { deleteTutoring } from "@/app/lib/actions";
 
-export function UpdateExamPrep({ id }: { id: string }) {
+export function UpdateTutoring({ id }: { id: string }) {
   return (
     <Link
-      href={`/dashboard/exam-prep/${id}/edit`}
+      href={`/dashboard/tutoring/${id}/edit`}
       className="rounded-md border p-2 hover:bg-gray-100"
     >
       <Pencil className="w-5" />
     </Link>
   );
 }
-export function DeleteExamPrep() {
-  // const deleteInvoiceWithId = deleteInvoice.bind(null, id);
+export function DeleteTutoring({ id }: { id: string }) {
+  const deleteTutoringWithId = async () => {
+    try {
+      await deleteTutoring(id);
+      // Optional: Add any client-side success handling here
+    } catch (error) {
+      // Handle errors appropriately
+      console.error("Failed to delete tutoring:", error);
+    }
+  };
 
   return (
-    <form action="#">
-      {/* deleteInvoiceWithId */}
-      <button type="submit" className="rounded-md border p-2 hover:bg-gray-100">
+    <form action={deleteTutoringWithId}>
+      <button
+        type="submit"
+        className="rounded-md border p-2 hover:bg-gray-100 hover:cursor-pointer transition-all delay-300"
+      >
         <span className="sr-only">Delete</span>
         <Trash2 className="w-4" />
       </button>
     </form>
   );
 }
+

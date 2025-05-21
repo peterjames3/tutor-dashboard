@@ -11,7 +11,7 @@ export default function NotFound() {
         <p className="mt-4 text-primary">We can&apos;t find that resource.</p>
         <div className="mt-6 ">
           <Link
-            href="/dashboard/exam-prep"
+            href="/dashboard/tutoring"
             className="  btn delay-300 md:text-base"
           >
             Back to Home
