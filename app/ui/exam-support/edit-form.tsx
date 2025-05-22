@@ -1,6 +1,6 @@
 "use client";
 
-import { AssistantField, ExamPrepForm } from "@/app/lib/definitions";
+import { AssistantField, ExamSupportForm } from "@/app/lib/definitions";
 import {
   Clock,
   CheckCircle2,
@@ -16,7 +16,7 @@ import { useActionState } from "react";
 export default function EditExamSupportForm({
   student,
 }: {
-  student: ExamPrepForm;
+  student: ExamSupportForm;
   assistants: AssistantField[];
 }) {
   const initialState: State = { message: null, errors: {} };
@@ -149,7 +149,7 @@ export default function EditExamSupportForm({
       <div className="mt-6 flex justify-end gap-4">
         <Link
           href="/dashboard/exam-support"
-          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"a
         >
           Cancel
         </Link>

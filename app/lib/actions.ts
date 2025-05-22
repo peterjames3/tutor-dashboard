@@ -77,9 +77,7 @@ export async function deleteExamPrep(id: string) {
   try {
     await sql`DELETE FROM exam_prep_students WHERE id = ${id}`;
   } catch {
-    return {
-      message: "Database Error: Failed to Delete Student",
-    };
+    throw new Error("Database Error: Failed to Delete Student");
   }
 
   revalidatePath("/dashboard/exam-prep");
@@ -191,9 +189,7 @@ export async function deleteTutoring(id: string) {
   try {
     await sql`DELETE FROM tutoring_students WHERE id = ${id}`;
   } catch {
-    return {
-      message: "Database Error: Failed to Delete Student",
-    };
+    throw new Error("Database Error: Failed to Delete Student");
   }
 
   revalidatePath("/dashboard/exam-prep");
@@ -290,9 +286,7 @@ export async function deleteExamSupport(id: string) {
   try {
     await sql`DELETE FROM end_to_end_support_students WHERE id = ${id}`;
   } catch {
-    return {
-      message: "Database Error: Failed to Delete Student",
-    };
+    throw new Error("Database Error: Failed to Delete Student");
   }
 
   revalidatePath("/dashboard/exam-support");

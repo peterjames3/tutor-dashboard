@@ -1,6 +1,6 @@
-import { Pencil,  Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
-//import { deleteInvoice } from "@/app/lib/actions";
+import { deleteExamPrep } from "@/app/lib/actions";
 
 export function UpdateExamPrep({ id }: { id: string }) {
   return (
@@ -12,12 +12,11 @@ export function UpdateExamPrep({ id }: { id: string }) {
     </Link>
   );
 }
-export function DeleteExamPrep() {
-  // const deleteInvoiceWithId = deleteInvoice.bind(null, id);
+export function DeleteExamPrep({ id }: { id: string }) {
+  const deleteExamPrepWithId = deleteExamPrep.bind(null, id);
 
   return (
-    <form action="#">
-      {/* deleteInvoiceWithId */}
+    <form action={deleteExamPrepWithId}>
       <button type="submit" className="rounded-md border p-2 hover:bg-gray-100">
         <span className="sr-only">Delete</span>
         <Trash2 className="w-4" />

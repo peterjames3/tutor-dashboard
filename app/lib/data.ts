@@ -5,7 +5,7 @@ import { sql } from "@vercel/postgres";
 //   ExamPrepStudent,
 //   EndToEndSupportStudent,
 // } from "./definitions";
-
+import { ExamSupportForm } from "./definitions";
 export const fetchCardData = async () => {
   try {
     // Define all your promises first
@@ -356,9 +356,11 @@ export async function fetchExamSupportPages(query: string) {
   }
 }
 
-export async function fetchExamSupportById(id: string) {
+export async function fetchExamSupportById(
+  id: string
+): Promise<ExamSupportForm> {
   try {
-    const data = await sql`
+    const data = await sql<ExamSupportForm>`
       SELECT
         id,
         name,
@@ -375,18 +377,16 @@ export async function fetchExamSupportById(id: string) {
       WHERE id = ${id};
     `;
 
-    const student = data.rows.map((student) => ({
-      ...student,
-      exam_date: new Date(student.exam_date).toISOString().split("T")[0],
-    }));
+    if (data.rows.length === 0) {
+      throw new Error("Student not found");
+    }
 
-    return student[0];
+    return {
+      ...data.rows[0],
+      exam_date: new Date(data.rows[0].exam_date).toISOString().split("T")[0],
+    };
   } catch (error) {
     console.error("Database Error:", error);
-    return {
-      message: `Database Error: Fetching Exam Support Student by id: ${
-        error instanceof Error ? error.message : String(error)
-      }`,
-    };
+    throw new Error("Failed to fetch exam support student.");
   }
 }

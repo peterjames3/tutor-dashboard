@@ -43,19 +43,16 @@ export type ExamPrepForm = {
   exam_date: Date;
 };
 
-export interface ExamSupportStudent extends BaseStudent {
+export interface ExamSupportForm {
+  id: string;
+  name: string;
+  email: string;
+  phone_number: string;
+  level: string;
+  subject: string;
   exam: string;
-  examDate: Date;
+  exam_date: string;
+  assistant: string;
+  status: "Pending" | "In Progress" | "Completed";
+  support_type: string;
 }
-
-export type TutoringStudent = BaseStudent & {
-  supportType: "Tutoring";
-};
-
-export type ExamPrepStudent = ExamSupportStudent & {
-  supportType: "Exam Prep";
-};
-
-export type EndToEndSupportStudent = ExamSupportStudent & {
-  supportType: "End-to-End Exam Support";
-};

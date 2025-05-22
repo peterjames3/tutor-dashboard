@@ -1,6 +1,6 @@
 import EditExamSupportForm from "@/app/ui/exam-support/edit-form";
 import Breadcrumbs from "@/app/ui/exam-prep/breadcrumps";
-import { fetchExamSupportById, fetchStudents } from "@/app/lib/data";
+import { fetchExamSupportById } from "@/app/lib/data";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
 
-  const [studentData, assistants] = await Promise.all([
+  const [studentData] = await Promise.all([
     fetchExamSupportById(id),
-    fetchStudents(),
+    //fetchStudents(),
   ]);
 
   if (!studentData) {
@@ -21,7 +21,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   }
 
   return (
-    <main>
+    <section>
       <Breadcrumbs
         breadcrumbs={[
           { label: "Exam Support", href: "/dashboard/exam-support" },
@@ -32,7 +32,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           },
         ]}
       />
-      <EditExamSupportForm student={studentData} assistants={assistants} />
-    </main>
+      <EditExamSupportForm student={studentData} assistants={[]} />
+    </section>
   );
 }
