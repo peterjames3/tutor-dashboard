@@ -288,3 +288,105 @@ export async function fetchTutoringById(id: string) {
     throw new Error("Failed to fetch tutoring student.");
   }
 }
+
+//exam support
+
+export async function fetchFilteredExamSupport(
+  query: string,
+  currentPage: number
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const students = await sql`
+      SELECT
+        id,
+        name,
+        email,
+        phone_number,
+        level,
+        subject,
+        exam,
+        exam_date,
+        assistant,
+        support_type,
+        status
+      FROM end_to_end_support_students
+      WHERE
+        name ILIKE ${`%${query}%`} OR
+        email ILIKE ${`%${query}%`} OR
+        exam ILIKE ${`%${query}%`} OR
+        subject ILIKE ${`%${query}%`} OR
+        assistant ILIKE ${`%${query}%`} OR
+        status ILIKE ${`%${query}%`}
+      ORDER BY exam_date DESC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return students.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch exam support students.");
+  }
+}
+
+export async function fetchExamSupportPages(query: string) {
+  try {
+    const count = await sql`
+      SELECT COUNT(*)
+      FROM end_to_end_support_students
+      WHERE
+        name ILIKE ${`%${query}%`} OR
+        email ILIKE ${`%${query}%`} OR
+        exam ILIKE ${`%${query}%`} OR
+       subject ILIKE ${`%${query}%`} OR
+        assistant ILIKE ${`%${query}%`} OR
+        status ILIKE ${`%${query}%`}
+    `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error("Database Error:", error);
+    return {
+      message: `Database Error: Fetching Exam Support Student: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    };
+  }
+}
+
+export async function fetchExamSupportById(id: string) {
+  try {
+    const data = await sql`
+      SELECT
+        id,
+        name,
+        email,
+        phone_number,
+        level,
+        subject,
+        exam,
+        exam_date,
+        assistant,
+        status,
+        support_type
+      FROM end_to_end_support_students
+      WHERE id = ${id};
+    `;
+
+    const student = data.rows.map((student) => ({
+      ...student,
+      exam_date: new Date(student.exam_date).toISOString().split("T")[0],
+    }));
+
+    return student[0];
+  } catch (error) {
+    console.error("Database Error:", error);
+    return {
+      message: `Database Error: Fetching Exam Support Student by id: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    };
+  }
+}

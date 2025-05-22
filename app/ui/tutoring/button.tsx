@@ -13,15 +13,7 @@ export function UpdateTutoring({ id }: { id: string }) {
   );
 }
 export function DeleteTutoring({ id }: { id: string }) {
-  const deleteTutoringWithId = async () => {
-    try {
-      await deleteTutoring(id);
-      // Optional: Add any client-side success handling here
-    } catch (error) {
-      // Handle errors appropriately
-      console.error("Failed to delete tutoring:", error);
-    }
-  };
+  const deleteTutoringWithId = deleteTutoring.bind(null, id);
 
   return (
     <form action={deleteTutoringWithId}>
@@ -35,4 +27,3 @@ export function DeleteTutoring({ id }: { id: string }) {
     </form>
   );
 }
-

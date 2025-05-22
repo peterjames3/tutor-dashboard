@@ -240,3 +240,102 @@ export async function updateStudentStatusTutoring(
     };
   }
 }
+
+//exam support actions
+const UpdateExamSupport = FormSchema.omit({ id: true, date: true });
+
+export async function updateExamSupport(
+  id: string,
+  prevState: State,
+  formData: FormData
+) {
+  const validatedFields = UpdateExamSupport.safeParse({
+    studentId: formData.get("studentId"),
+    assistant: formData.get("assistant"),
+    status: formData.get("status"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Update Student.",
+    };
+  }
+
+  const { assistant, status } = validatedFields.data;
+
+  try {
+    await sql`
+      UPDATE end_to_end_support_students
+      SET 
+        assistant = ${assistant},
+        status = ${status},
+        updated_at = NOW()
+      WHERE id = ${id}
+    `;
+  } catch (error) {
+    console.log("SQL Error in updateExamSupport:", error);
+    return {
+      message: `Database Error: Failed to Update Student: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    };
+  }
+
+  revalidatePath("/dashboard/exam-support");
+  redirect("/dashboard/exam-support");
+}
+
+export async function deleteExamSupport(id: string) {
+  try {
+    await sql`DELETE FROM end_to_end_support_students WHERE id = ${id}`;
+  } catch {
+    return {
+      message: "Database Error: Failed to Delete Student",
+    };
+  }
+
+  revalidatePath("/dashboard/exam-support");
+}
+
+export async function assignAssistantExamSupport(
+  studentId: string,
+  assistantId: string
+) {
+  try {
+    await sql`
+      UPDATE end_to_end_support_students
+      SET 
+        assistant = ${assistantId},
+        updated_at = NOW()
+      WHERE id = ${studentId}
+    `;
+    revalidatePath("/dashboard/exam-support");
+    return { success: true };
+  } catch {
+    return {
+      message: "Database Error: Failed to Assign Assistant",
+    };
+  }
+}
+
+export async function updateStudentStatusExamSupport(
+  studentId: string,
+  status: "Pending" | "In Progress" | "Completed"
+) {
+  try {
+    await sql`
+      UPDATE end_to_end_support_students
+      SET 
+        status = ${status},
+        updated_at = NOW()
+      WHERE id = ${studentId}
+    `;
+    revalidatePath("/dashboard/exam-support");
+    return { success: true };
+  } catch {
+    return {
+      message: "Database Error: Failed to Update Status",
+    };
+  }
+}
