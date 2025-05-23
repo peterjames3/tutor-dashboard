@@ -3,6 +3,8 @@ export type User = {
   name: string;
   email: string;
   password: string;
+  role: string;
+  imageurl: string;
 };
 
 export type StudentLevel = "High School" | "A-Level" | "College";

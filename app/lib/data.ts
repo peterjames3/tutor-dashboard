@@ -5,7 +5,22 @@ import { sql } from "@vercel/postgres";
 //   ExamPrepStudent,
 //   EndToEndSupportStudent,
 // } from "./definitions";
-import { ExamSupportForm } from "./definitions";
+import { ExamSupportForm, User } from "./definitions";
+
+export const fetchUser = async () => {
+  try {
+    const user = await sql<User>`SELECT 
+    id,
+    name,
+    email,
+    imageurl,
+    role FROM users`;
+    return user.rows;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw new Error("Failed to fetch user data");
+  }
+};
 export const fetchCardData = async () => {
   try {
     // Define all your promises first

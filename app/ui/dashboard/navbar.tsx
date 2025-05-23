@@ -1,6 +1,8 @@
 "use client";
-import { useState } from "react";
-import Image from "next/image";
+import { useState, Suspense } from "react";
+import { AdminSemidataSkeleton } from "../skeletons";
+
+import AdminSemidata from "@/app/ui/dashboard/admin-semidata";
 import { Bell, ChevronDown, ChevronUp } from "lucide-react";
 import Notification from "./notification";
 import UserDropdown from "./user-dropdown";
@@ -14,7 +16,6 @@ export default function Navbar() {
   const toggleNotification = () => {
     setIsNotificationOpen(!isnotificationOpen);
   };
-
 
   return (
     <header className=" flex w-full items-center justify-between px-4 py-2 bg-white border-b border-accent2">
@@ -35,14 +36,10 @@ export default function Navbar() {
         <div>{isnotificationOpen && <Notification />}</div>
 
         <div className="flex items-center gap-3 hover:bg-accent2  rounded-lg   transition-all duration-200 ease-in-out p-2 ">
-          <Image
-            src="/image-avatar.png"
-            alt="Avatar"
-            width={80}
-            height={80}
-            className="w-8 h-8 rounded-full"
-          />
-          <span className="text-label text-primary font-medium">John Doe</span>
+          <Suspense fallback={<AdminSemidataSkeleton />}>
+            <AdminSemidata />
+          </Suspense>
+
           {isOpen ? (
             <ChevronUp
               className="text-primary cursor-pointer"
@@ -54,11 +51,7 @@ export default function Navbar() {
               onClick={toggleDropdown}
             />
           )}
-          <div>
-            {isOpen && (
-              <UserDropdown />
-            )}
-          </div>
+          <div>{isOpen && <UserDropdown />}</div>
         </div>
       </div>
     </header>

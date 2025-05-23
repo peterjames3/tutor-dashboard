@@ -26,6 +26,19 @@ export function CardsSkeleton() {
     </>
   );
 }
+export function AdminSemidataSkeleton() {
+  return (
+    <div className={`${shimmer} relative flex w-full gap-2 overflow-hidden`}>
+      <div className="flex items-center">
+        <div className="mr-2 h-12 w-12 rounded-full bg-gray-200" />
+        <div className="min-w-0 gap-0.5">
+          <div className="h-5 w-40 rounded-md bg-gray-200" />
+          <div className="mt-2 h-4 w-12 rounded-md bg-gray-200" />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function TutoringServicesSkeleton() {
   return (
