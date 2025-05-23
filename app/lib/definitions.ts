@@ -1,3 +1,4 @@
+import { z } from "zod";
 export type User = {
   id: string;
   name: string;
@@ -58,3 +59,43 @@ export interface ExamSupportForm {
   status: "Pending" | "In Progress" | "Completed";
   support_type: string;
 }
+
+export const FormSchema = z.object({
+  id: z.string(),
+  studentId: z.string({
+    invalid_type_error: "Please select a student",
+  }),
+  assistant: z.string({
+    invalid_type_error: "Please select an assistant",
+  }),
+  status: z.enum(["Pending", "In Progress", "Completed"], {
+    invalid_type_error: "Please select a valid status.",
+  }),
+  date: z.string(),
+});
+
+export type State = {
+  errors?: {
+    studentId?: string[];
+    assistant?: string[];
+    status?: string[];
+  };
+  message?: string | null;
+};
+
+export type ProfileState = {
+  message: string | null;
+  errors?: {
+    avatar?: string[];
+    firstName?: string[];
+    lastName?: string[];
+    email?: string[];
+  };
+};
+
+export const ProfileSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email("Invalid email address"),
+});
+

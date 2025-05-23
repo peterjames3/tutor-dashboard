@@ -25,7 +25,6 @@ export default function AdminSemidata() {
         />
         <div className="flex flex-col">
           <h2 className="text-label font-semibold text-primary">Name: null</h2>
-          <p className="text-sm text-label">Role: null</p>
         </div>
       </div>
     );
@@ -46,7 +45,6 @@ export default function AdminSemidata() {
             <h2 className="text-label font-semibold text-primary">
               {user?.name}
             </h2>
-            <p className="text-sm text-label">{user?.role}</p>
           </div>
         </div>
       ))}

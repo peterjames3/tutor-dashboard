@@ -22,7 +22,7 @@ export default function ExamPrepStatus({ status }: { status: string }) {
       {status === "In Progress" && (
         <>
           In Progress
-          <Loader2 className="ml-1 w-3 h-3 animate-spin" />
+          <Loader2 className="ml-1 w-3 h-3 animate-spin " />
         </>
       )}
       {status === "Completed" && (

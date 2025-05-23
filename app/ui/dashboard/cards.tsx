@@ -47,7 +47,7 @@ export const Card = ({
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 }) => {
   return (
-    <div className=" flex justify-between items-center rounded-lg shadow-md px-6 py-10 bg-tertiary-30">
+    <div className=" max-w-[400px] flex justify-between items-center rounded-lg shadow-md px-6 py-10 bg-tertiary-30">
       <div className="flex flex-col">
         <h2 className="p-text text-primary">{title}</h2>
         <p className="text-4xl font-bold">{count}</p>

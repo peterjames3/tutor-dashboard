@@ -5,32 +5,103 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 // import { signIn } from "@/auth";
 // import { AuthError } from "next-auth";
+import {
+  FormSchema,
+  ProfileSchema,
+  type State,
+  type ProfileState,
+} from "./definitions";
 
-const FormSchema = z.object({
-  id: z.string(),
-  studentId: z.string({
-    invalid_type_error: "Please select a student",
-  }),
-  assistant: z.string({
-    invalid_type_error: "Please select an assistant",
-  }),
-  status: z.enum(["Pending", "In Progress", "Completed"], {
-    invalid_type_error: "Please select a valid status.",
-  }),
-  date: z.string(),
-});
+// const FormSchema = z.object({
+//   id: z.string(),
+//   studentId: z.string({
+//     invalid_type_error: "Please select a student",
+//   }),
+//   assistant: z.string({
+//     invalid_type_error: "Please select an assistant",
+//   }),
+//   status: z.enum(["Pending", "In Progress", "Completed"], {
+//     invalid_type_error: "Please select a valid status.",
+//   }),
+//   date: z.string(),
+// });
 
-export type State = {
-  errors?: {
-    studentId?: string[];
-    assistant?: string[];
-    status?: string[];
-  };
-  message?: string | null;
-};
+// export type State = {
+//   errors?: {
+//     studentId?: string[];
+//     assistant?: string[];
+//     status?: string[];
+//   };
+//   message?: string | null;
+// };
+// export type ProfileState = {
+//   message: string | null;
+//   errors?: {
+//     avatar?: string[];
+//     firstName?: string[];
+//     lastName?: string[];
+//     email?: string[];
+//   };
+// };
+// export const ProfileSchema = z.object({
+//   firstName: z.string().min(1, "First name is required"),
+//   lastName: z.string().min(1, "Last name is required"),
+//   email: z.string().email("Invalid email address"),
+// });
+
+// export const PasswordSchema = z
+//   .object({
+//     currentPassword: z
+//       .string()
+//       .min(8, "Password must be at least 8 characters"),
+//     newPassword: z
+//       .string()
+//       .min(8, "Password must be at least 8 characters")
+//       .regex(/[A-Z]/, "Must contain at least one uppercase letter")
+//       .regex(/[a-z]/, "Must contain at least one lowercase letter")
+//       .regex(/[0-9]/, "Must contain at least one number"),
+//     confirmPassword: z.string(),
+//   })
+//   .refine((data) => data.newPassword === data.confirmPassword, {
+//     message: "Passwords don't match",
+//     path: ["confirmPassword"],
+//   });
 
 const UpdateExamPrep = FormSchema.omit({ id: true, date: true });
 
+export async function updateProfile(
+  prevState: ProfileState,
+  formData: FormData
+): Promise<ProfileState> {
+  const rawFormData = {
+    userId: formData.get("userId"),
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
+    email: formData.get("email"),
+    avatar: formData.get("avatar"),
+  };
+
+  try {
+    const validatedData = ProfileSchema.parse(rawFormData);
+
+    await sql`
+      UPDATE users
+      SET 
+        name = ${`${validatedData.firstName} ${validatedData.lastName}`},
+        email = ${validatedData.email},
+        imageurl = ${rawFormData.avatar?.toString() || ""}
+      WHERE id = ${rawFormData.userId?.toString()}
+    `;
+
+    revalidatePath("dashboard/settings");
+    return { message: "Profile updated successfully" };
+  } catch {
+    return {
+      message: "Database Error: Failed to Update profile",
+    };
+  }
+}
+export const changePassword = async () => {};
 export async function updateExamPrep(
   id: string,
   prevState: State,

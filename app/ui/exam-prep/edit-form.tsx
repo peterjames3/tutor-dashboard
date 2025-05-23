@@ -10,7 +10,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/app/ui/button";
-import { updateExamPrep, State } from "@/app/lib/actions";
+import { updateExamPrep } from "@/app/lib/actions";
+import { State } from "@/app/lib/definitions";
 import { useActionState } from "react";
 
 export default function EditExamPrepForm({
