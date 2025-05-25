@@ -1,7 +1,8 @@
 "use client";
 import { Loader2 } from "lucide-react";
-import { useFormState } from "react-dom";
-import { ProfileState, updateProfile } from "@/app/lib/actions";
+import { useActionState } from "react";
+import { updateProfile } from "@/app/lib/actions";
+import { ProfileState } from "@/app/lib/definitions";
 import Image from "next/image";
 
 export default function ProfileForm({
@@ -17,7 +18,7 @@ export default function ProfileForm({
   const initialState: ProfileState = { message: null, errors: {} };
   // const updateUserProfileWithId = updateProfile.bind(null, user.id, );
   const [firstName, lastName] = user.name.split(" ");
-  const [state, formAction, isPending] = useFormState(
+  const [state, formAction, isPending] = useActionState(
     updateProfile,
     initialState
   );
@@ -33,13 +34,13 @@ export default function ProfileForm({
           {/* Avatar Upload */}
           <div className="flex items-center gap-6">
             <Image
-              src={user.imageurl || "/default-avatar.png"}
+              src="/image-avatar.png"
               alt="Avatar"
               width={80}
               height={80}
               className="rounded-full"
             />
-            <div className="flex-1">
+            {/* <div className="flex-1">
               <label className="block text-sm font-medium mb-2">
                 Change Avatar
               </label>
@@ -58,7 +59,7 @@ export default function ProfileForm({
                     </p>
                   ))}
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Name Fields */}

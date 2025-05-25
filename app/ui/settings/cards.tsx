@@ -3,14 +3,10 @@ import Image from "next/image";
 
 export default async function CardWrapper() {
   const user = await fetchUser();
+  console.log(`profile picture ${user[0]?.imageurl}`);
   return (
     <>
-      <Card
-        title={user[0]?.name}
-        email={user[0]?.email}
-        role={user[0]?.role}
-        imageurl={user[0]?.imageurl}
-      />
+      <Card title={user[0]?.name} email={user[0]?.email} role={user[0]?.role} />
     </>
   );
 }
@@ -19,12 +15,10 @@ export const Card = ({
   title,
   email,
   role,
-  imageurl,
 }: {
   title: string;
   email: string;
   role: string;
-  imageurl: string;
 }) => {
   return (
     <section className=" rounded-lg shadow-md px-4 py-6 bg-tertiary-30">
@@ -32,7 +26,7 @@ export const Card = ({
       <div className="flex gap-6 items-center mt-2">
         <figure className="w-22 h-22 rounded-full bg-accent flex items-center justify-center">
           <Image
-            src={imageurl || "/image-avatar.png"}
+            src="/image-avatar.png"
             alt="Admin Avatar"
             height={100}
             width={100}

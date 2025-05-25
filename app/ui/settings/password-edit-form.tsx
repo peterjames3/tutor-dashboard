@@ -1,10 +1,22 @@
 "use client";
 import { Loader2 } from "lucide-react";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import { changePassword } from "@/app/lib/actions";
+import { useState } from "react";
+import { LockKeyhole, Eye, EyeOff } from "lucide-react";
 
 export default function PasswordForm({ userId }: { userId: string }) {
-  const [state, formAction, isPending] = useFormState(changePassword, {});
+  const [visibility, setVisibility] = useState({
+    current: false,
+    new: false,
+    confirm: false
+  });
+  
+  const [state, formAction, isPending] = useActionState(changePassword, {});
+
+  const toggleVisibility = (field: keyof typeof visibility) => {
+    setVisibility(prev => ({ ...prev, [field]: !prev[field] }));
+  };
 
   return (
     <section className="bg-tertiary-30 p-6 rounded-lg shadow-sm">
@@ -14,63 +26,111 @@ export default function PasswordForm({ userId }: { userId: string }) {
         <input type="hidden" name="userId" value={userId} />
 
         <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-2">
+          {/* Current Password */}
+          <div className="mt-4">
+            <label
+              className="mb-3 mt-5 block text-sm font-medium text-gray-900"
+              htmlFor="currentPassword"
+            >
               Current Password
             </label>
-            <input
-              name="currentPassword"
-              type="password"
-              className="w-full p-2 border rounded-md"
-            />
+            <div className="relative">
+              <input
+                className="peer block w-full rounded-md border border-cardBg py-[9px] pl-10 text-sm outline placeholder:text-gray-500"
+                id="currentPassword"
+                type={visibility.current ? "text" : "password"}
+                name="currentPassword"
+                placeholder="Enter current password"
+                required
+                minLength={6}
+              />
+              <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-primary peer-focus:text-gray-900" />
+              <button
+                type="button"
+                onClick={() => toggleVisibility('current')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-primary focus:outline-none cursor-pointer"
+                aria-label={visibility.current ? "Hide password" : "Show password"}
+              >
+                {visibility.current ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">
+          {/* New Password */}
+          <div className="mt-4">
+            <label
+              className="mb-3 mt-5 block text-sm font-medium text-gray-900"
+              htmlFor="newPassword"
+            >
               New Password
             </label>
-            <input
-              name="newPassword"
-              type="password"
-              className="w-full p-2 border rounded-md"
-            />
+            <div className="relative">
+              <input
+                className="peer block w-full rounded-md border border-cardBg py-[9px] pl-10 text-sm outline placeholder:text-gray-500"
+                id="newPassword"
+                type={visibility.new ? "text" : "password"}
+                name="newPassword"
+                placeholder="Enter new password"
+                required
+                minLength={6}
+              />
+              <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-primary peer-focus:text-gray-900" />
+              <button
+                type="button"
+                onClick={() => toggleVisibility('new')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-primary focus:outline-none cursor-pointer"
+                aria-label={visibility.new ? "Hide password" : "Show password"}
+              >
+                {visibility.new ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              Confirm New Password
+          {/* Confirm Password */}
+          <div className="mt-4">
+            <label
+              className="mb-3 mt-5 block text-sm font-medium text-gray-900"
+              htmlFor="confirmPassword"
+            >
+              Confirm Password
             </label>
-            <input
-              name="confirmPassword"
-              type="password"
-              className="w-full p-2 border rounded-md"
-            />
+            <div className="relative">
+              <input
+                className="peer block w-full rounded-md border border-cardBg py-[9px] pl-10 text-sm outline placeholder:text-gray-500"
+                id="confirmPassword"
+                type={visibility.confirm ? "text" : "password"}
+                name="confirmPassword"
+                placeholder="Confirm new password"
+                required
+                minLength={6}
+              />
+              <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-primary peer-focus:text-gray-900" />
+              <button
+                type="button"
+                onClick={() => toggleVisibility('confirm')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-primary focus:outline-none hover:cursor-pointer"
+                aria-label={visibility.confirm ? "Hide password" : "Show password"}
+              >
+                {visibility.confirm ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
           </div>
         </div>
 
-        <button type="submit" className="btn hover:cursor-pointer">
+        <button
+          type="submit"
+          className="btn hover:cursor-pointer"
+          disabled={isPending}
+        >
           {isPending ? (
             <span className="loader flex items-center gap-2">
-              {" "}
               <Loader2 className="ml-1 size-5 animate-spin" />
               Saving Password
             </span>
           ) : (
-            <span> Change Password</span>
+            <span>Change Password</span>
           )}
         </button>
-
-        {/* {state.message && (
-          <p
-            className={`mt-4 text-sm ${
-              state.message.includes("success")
-                ? "text-green-600"
-                : "text-red-600"
-            }`}
-          >
-            {state.message}
-          </p>
-        )} */}
       </form>
     </section>
   );

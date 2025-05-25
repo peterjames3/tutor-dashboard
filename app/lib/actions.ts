@@ -1,5 +1,5 @@
 "use server";
-import { z } from "zod";
+
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -95,9 +95,13 @@ export async function updateProfile(
 
     revalidatePath("dashboard/settings");
     return { message: "Profile updated successfully" };
-  } catch {
+  } catch (error) {
+    console.log(`Sql error : ${error}`);
+    console.log("SQL Error in updateExamSupport:", error);
     return {
-      message: "Database Error: Failed to Update profile",
+      message: `Database Error: Failed to Update Profile: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
     };
   }
 }
