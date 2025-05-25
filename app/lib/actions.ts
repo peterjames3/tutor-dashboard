@@ -3,69 +3,17 @@
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import  bcrypt  from  'bcryptjs';
 // import { signIn } from "@/auth";
 // import { AuthError } from "next-auth";
 import {
   FormSchema,
   ProfileSchema,
+  PasswordSchema,
   type State,
   type ProfileState,
+  type PasswordState,
 } from "./definitions";
-
-// const FormSchema = z.object({
-//   id: z.string(),
-//   studentId: z.string({
-//     invalid_type_error: "Please select a student",
-//   }),
-//   assistant: z.string({
-//     invalid_type_error: "Please select an assistant",
-//   }),
-//   status: z.enum(["Pending", "In Progress", "Completed"], {
-//     invalid_type_error: "Please select a valid status.",
-//   }),
-//   date: z.string(),
-// });
-
-// export type State = {
-//   errors?: {
-//     studentId?: string[];
-//     assistant?: string[];
-//     status?: string[];
-//   };
-//   message?: string | null;
-// };
-// export type ProfileState = {
-//   message: string | null;
-//   errors?: {
-//     avatar?: string[];
-//     firstName?: string[];
-//     lastName?: string[];
-//     email?: string[];
-//   };
-// };
-// export const ProfileSchema = z.object({
-//   firstName: z.string().min(1, "First name is required"),
-//   lastName: z.string().min(1, "Last name is required"),
-//   email: z.string().email("Invalid email address"),
-// });
-
-// export const PasswordSchema = z
-//   .object({
-//     currentPassword: z
-//       .string()
-//       .min(8, "Password must be at least 8 characters"),
-//     newPassword: z
-//       .string()
-//       .min(8, "Password must be at least 8 characters")
-//       .regex(/[A-Z]/, "Must contain at least one uppercase letter")
-//       .regex(/[a-z]/, "Must contain at least one lowercase letter")
-//       .regex(/[0-9]/, "Must contain at least one number"),
-//     confirmPassword: z.string(),
-//   })
-//   .refine((data) => data.newPassword === data.confirmPassword, {
-//     message: "Passwords don't match",
-//     path: ["confirmPassword"],
-//   });
 
 const UpdateExamPrep = FormSchema.omit({ id: true, date: true });
 
@@ -105,7 +53,46 @@ export async function updateProfile(
     };
   }
 }
-export const changePassword = async () => {};
+export const changePassword = async (
+  prevState: ProfileState,
+  formData: FormData
+): Promise<PasswordState> => {
+  const rowFormData = {
+    userId: formData.get("userId"),
+    currentPassword: formData.get("currentPassword"),
+    newPassword: formData.get("newPassword"),
+    confirmPassword: formData.get("confirmPassword"),
+  };
+
+  try {
+    const validatedData = PasswordSchema.parse(rowFormData);
+    const hashedPassword = await bcrypt.h.hasg
+
+    // Here you would typically hash the new password and update it in the database
+    // For demonstration, we'll just log it
+    console.log("Updating password for user:", validatedData.userId);
+    console.log("New password:", validatedData.newPassword);
+
+    // Simulate a database update
+    await sql`
+      UPDATE users
+      SET 
+        password = ${validatedData.newPassword} -- This should be hashed in a real application
+      WHERE id = ${validatedData.userId}
+    `;
+
+    revalidatePath("dashboard/settings");
+    return { status: "success", message: "Password updated successfully" };
+  } catch (error) {
+    console.log(`Sql error : ${error}`);
+    return {
+      status: "error",
+      message: `Database Error: Failed to Update Password: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    };
+  }
+};
 export async function updateExamPrep(
   id: string,
   prevState: State,

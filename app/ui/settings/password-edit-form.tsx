@@ -1,21 +1,25 @@
 "use client";
 import { Loader2 } from "lucide-react";
-import { useActionState } from "react";
 import { changePassword } from "@/app/lib/actions";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { LockKeyhole, Eye, EyeOff } from "lucide-react";
+import { passwordState } from "@/app/lib/definitions";
 
 export default function PasswordForm({ userId }: { userId: string }) {
   const [visibility, setVisibility] = useState({
     current: false,
     new: false,
-    confirm: false
+    confirm: false,
   });
-  
-  const [state, formAction, isPending] = useActionState(changePassword, {});
+
+  const initialState: passwordState = { message: null, error: {} };
+  const [state, formAction, isPending] = useActionState(
+    changePassword,
+    initialState
+  );
 
   const toggleVisibility = (field: keyof typeof visibility) => {
-    setVisibility(prev => ({ ...prev, [field]: !prev[field] }));
+    setVisibility((prev) => ({ ...prev, [field]: !prev[field] }));
   };
 
   return (
@@ -27,6 +31,7 @@ export default function PasswordForm({ userId }: { userId: string }) {
 
         <div className="space-y-4">
           {/* Current Password */}
+
           <div className="mt-4">
             <label
               className="mb-3 mt-5 block text-sm font-medium text-gray-900"
@@ -47,9 +52,11 @@ export default function PasswordForm({ userId }: { userId: string }) {
               <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-primary peer-focus:text-gray-900" />
               <button
                 type="button"
-                onClick={() => toggleVisibility('current')}
+                onClick={() => toggleVisibility("current")}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-primary focus:outline-none cursor-pointer"
-                aria-label={visibility.current ? "Hide password" : "Show password"}
+                aria-label={
+                  visibility.current ? "Hide password" : "Show password"
+                }
               >
                 {visibility.current ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -77,7 +84,7 @@ export default function PasswordForm({ userId }: { userId: string }) {
               <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-primary peer-focus:text-gray-900" />
               <button
                 type="button"
-                onClick={() => toggleVisibility('new')}
+                onClick={() => toggleVisibility("new")}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-primary focus:outline-none cursor-pointer"
                 aria-label={visibility.new ? "Hide password" : "Show password"}
               >
@@ -107,9 +114,11 @@ export default function PasswordForm({ userId }: { userId: string }) {
               <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-primary peer-focus:text-gray-900" />
               <button
                 type="button"
-                onClick={() => toggleVisibility('confirm')}
+                onClick={() => toggleVisibility("confirm")}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-primary focus:outline-none hover:cursor-pointer"
-                aria-label={visibility.confirm ? "Hide password" : "Show password"}
+                aria-label={
+                  visibility.confirm ? "Hide password" : "Show password"
+                }
               >
                 {visibility.confirm ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -131,6 +140,16 @@ export default function PasswordForm({ userId }: { userId: string }) {
             <span>Change Password</span>
           )}
         </button>
+        {/* Form Submission Feedback */}
+        {state.message && (
+          <p
+            className={`text-sm mt-4 ${
+              state.status === "success" ? "text-green-600" : "text-red-500"
+            }`}
+          >
+            {state.message}
+          </p>
+        )}
       </form>
     </section>
   );
