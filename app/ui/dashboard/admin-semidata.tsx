@@ -16,17 +16,31 @@ export default function AdminSemidata() {
         const data = await fetchUser();
         setUsers(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load user data");
+        setError(
+          err instanceof Error ? err.message : "Failed to load user data"
+        );
       }
     };
-    
+
     loadUser();
   }, []);
 
   if (error) {
     return (
-      <div className="text-red-500 p-4">
-        Error: {error}
+      <div className="flex items-center gap-2">
+        <Image
+          src="/image-avatar.png"
+          alt="Admin Avatar"
+          height={80}
+          width={80}
+          className="w-10 h-10 rounded-full"
+        />
+        <div className="flex flex-col text-error">
+          <p className="text-label font-semibold text-primary">
+            {/* Error: {error} */}
+            Essie K
+          </p>
+        </div>
       </div>
     );
   }
