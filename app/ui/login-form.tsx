@@ -7,23 +7,26 @@ import {
   Eye,
   Mail,
   EyeOff,
- // CircleAlert,
+  CircleAlert,
 } from "lucide-react";
 import { Button } from "@/app/ui/button";
 import { useState } from "react";
-//import { useActionState } from "react";
-//import { authenticate } from "@/app/lib/actions";
+import { useActionState } from "react";
+import { authenticate } from "@/app/lib/actions";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginForm() {
-  //   const [errorMessage, formAction, isPending] = useActionState(
-  //     authenticate,
-  //     undefined
-  //   );
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const [errorMessage, formAction, isPending] = useActionState(
+    authenticate,
+    undefined
+  );
 
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <form action="#" className="space-y-3 py-5 ">
+    <form action={formAction} className="space-y-3 py-5 ">
       <div className="flex-1 rounded-lg  px-6 pb-4 pt-8">
         <div className="w-full flex items-center justify-center">
           <GraduationCap size={64} className="text-secondary" />
@@ -83,21 +86,25 @@ export default function LoginForm() {
             </div>
           </div>
         </div>
-        <Button className="mt-4 w-full btn cursor-pointer">
+        <input type="hidden" name="redirectTo" value={callbackUrl} />
+        <Button
+          className="mt-4 w-full btn cursor-pointer"
+          aria-disabled={isPending}
+        >
           Log in <MoveRight className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
-        {/* <div
+        <div
           className="flex h-8 items-end space-x-1"
           aria-live="polite"
           aria-atomic="true"
         >
           {errorMessage && (
             <>
-              <CircleAlert className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500">{errorMessage}</p>
+              <CircleAlert className="h-5 w-5 text-error" />
+              <p className="text-sm text-error">{errorMessage}</p>
             </>
           )}
-        </div> */}
+        </div>
       </div>
     </form>
   );

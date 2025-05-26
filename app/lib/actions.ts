@@ -5,8 +5,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
-// import { signIn } from "@/auth";
-// import { AuthError } from "next-auth";
+import { signIn } from "@/auth";
+import { AuthError } from "next-auth";
 import {
   FormSchema,
   ProfileSchema,
@@ -18,6 +18,24 @@ import {
 
 const UpdateExamPrep = FormSchema.omit({ id: true, date: true });
 
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData
+) {
+  try {
+    await signIn("credentials", formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case "CredentialsSignin":
+          return "Invalid credentials.";
+        default:
+          return "Something went wrong.";
+      }
+    }
+    throw error;
+  }
+}
 export async function updateProfile(
   prevState: ProfileState,
   formData: FormData

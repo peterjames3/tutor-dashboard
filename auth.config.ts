@@ -1,4 +1,4 @@
-/* import type { NextAuthConfig } from "next-auth";
+import type { NextAuthConfig } from "next-auth";
 
 export const authConfig = {
   pages: {
@@ -15,26 +15,6 @@ export const authConfig = {
         return Response.redirect(new URL("/dashboard", nextUrl));
       }
       return true;
-    },
-  },
-  providers: [], // Add providers with an empty array for now
-} satisfies NextAuthConfig;
- */
-
-import type { NextAuthConfig } from "next-auth";
-
-export const authConfig = {
-  pages: {
-    signIn: "/login", // Redirect here for login page
-  },
-  callbacks: {
-    // Use the session callback to control redirection after login
-    async redirect({ url, baseUrl }) {
-      // If the user is logging in, always redirect to the dashboard
-      if (url.startsWith(baseUrl)) {
-        return `${baseUrl}/dashboard`;
-      }
-      return baseUrl;
     },
   },
   providers: [], // Add providers with an empty array for now
