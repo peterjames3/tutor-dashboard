@@ -3,7 +3,8 @@
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import  bcrypt  from  'bcryptjs';
+import bcrypt from "bcryptjs";
+import { z } from "zod";
 // import { signIn } from "@/auth";
 // import { AuthError } from "next-auth";
 import {
@@ -53,43 +54,103 @@ export async function updateProfile(
     };
   }
 }
-export const changePassword = async (
-  prevState: ProfileState,
+// In your actions file
+export const updatePassword = async (
+  prevState: PasswordState,
   formData: FormData
 ): Promise<PasswordState> => {
-  const rowFormData = {
-    userId: formData.get("userId"),
-    currentPassword: formData.get("currentPassword"),
-    newPassword: formData.get("newPassword"),
-    confirmPassword: formData.get("confirmPassword"),
-  };
-
   try {
-    const validatedData = PasswordSchema.parse(rowFormData);
-    const hashedPassword = await bcrypt.h.hasg
+    const parsedData = PasswordSchema.safeParse({
+      userId: formData.get("userId"),
+      currentPassword: formData.get("currentPassword"),
+      newPassword: formData.get("newPassword"),
+      confirmPassword: formData.get("confirmPassword"),
+    });
 
-    // Here you would typically hash the new password and update it in the database
-    // For demonstration, we'll just log it
-    console.log("Updating password for user:", validatedData.userId);
-    console.log("New password:", validatedData.newPassword);
+    if (!parsedData.success) {
+      return {
+        status: "error",
+        errors: parsedData.error.flatten().fieldErrors,
+        message: "Validation failed. Please check your inputs.",
+      };
+    }
 
-    // Simulate a database update
-    await sql`
-      UPDATE users
-      SET 
-        password = ${validatedData.newPassword} -- This should be hashed in a real application
-      WHERE id = ${validatedData.userId}
+    const { userId, currentPassword, newPassword } = parsedData.data;
+
+    const userResult = await sql`
+      SELECT password FROM users 
+      WHERE id = ${userId}
     `;
 
-    revalidatePath("dashboard/settings");
-    return { status: "success", message: "Password updated successfully" };
+    if (userResult.rowCount === 0) {
+      return {
+        status: "error",
+        message: "User not found",
+        errors: { currentPassword: ["Invalid user account"] },
+      };
+    }
+
+    const isValidPassword = await bcrypt.compare(
+      currentPassword,
+      userResult.rows[0].password
+    );
+
+    if (!isValidPassword) {
+      return {
+        status: "error",
+        errors: { currentPassword: ["Incorrect current password"] },
+        message: "Authentication failed",
+      };
+    }
+
+    if (currentPassword === newPassword) {
+      return {
+        status: "error",
+        errors: { newPassword: ["New password must be different"] },
+        message: "Invalid password change",
+      };
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await sql`
+      UPDATE users
+      SET password = ${hashedPassword}
+      WHERE id = ${userId}
+    `;
+
+    // Revalidate the settings path
+    revalidatePath("/dashboard/settings");
+
+    return {
+      status: "success",
+      message: "Password updated successfully",
+    };
   } catch (error) {
-    console.log(`Sql error : ${error}`);
+    console.error("Password change error:", error);
+
+    // Handle database errors
+    if (error instanceof Error && error.message.includes("unique constraint")) {
+      return {
+        status: "error",
+        message: "Password update conflict. Please try again.",
+        errors: {},
+      };
+    }
+
+    if (error instanceof z.ZodError) {
+      return {
+        status: "error",
+        errors: error.flatten().fieldErrors,
+        message: "Validation failed. Please check your inputs.",
+      };
+    }
+
     return {
       status: "error",
-      message: `Database Error: Failed to Update Password: ${
-        error instanceof Error ? error.message : String(error)
-      }`,
+      message:
+        error instanceof Error ? error.message : "An unknown error occurred",
+      errors: {},
     };
   }
 };

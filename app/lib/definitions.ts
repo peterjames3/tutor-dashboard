@@ -8,6 +8,8 @@ export type User = {
   role: string;
   imageurl: string;
 };
+// Client-safe version without sensitive fields
+export type SafeUser = Omit<User, "password" | "email">;
 
 export type StudentLevel = "High School" | "A-Level" | "College";
 
@@ -94,7 +96,7 @@ export type ProfileState = {
   };
 };
 
-export type PasswordState={
+export type PasswordState = {
   status: string;
   message: string | null;
   errors?: {
@@ -102,7 +104,7 @@ export type PasswordState={
     newPassword?: string[];
     confirmPassword?: string[];
   };
-}
+};
 
 export const ProfileSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -122,9 +124,14 @@ export const PasswordSchema = z
       .regex(/[A-Z]/, "Must contain at least one uppercase letter")
       .regex(/[a-z]/, "Must contain at least one lowercase letter")
       .regex(/[0-9]/, "Must contain at least one number"),
-      confirmPassword: z.string(),
+    confirmPassword: z.string(),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"],
+  })
+  // Add this new refinement to prevent same password
+  .refine((data) => data.newPassword !== data.currentPassword, {
+    message: "New password must be different from current password",
+    path: ["newPassword"],
   });

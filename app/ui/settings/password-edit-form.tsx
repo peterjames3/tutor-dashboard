@@ -1,9 +1,9 @@
 "use client";
 import { Loader2 } from "lucide-react";
-import { changePassword } from "@/app/lib/actions";
+import { updatePassword } from "@/app/lib/actions";
 import { useActionState, useState } from "react";
 import { LockKeyhole, Eye, EyeOff } from "lucide-react";
-import { passwordState } from "@/app/lib/definitions";
+import { PasswordState } from "@/app/lib/definitions";
 
 export default function PasswordForm({ userId }: { userId: string }) {
   const [visibility, setVisibility] = useState({
@@ -12,9 +12,9 @@ export default function PasswordForm({ userId }: { userId: string }) {
     confirm: false,
   });
 
-  const initialState: passwordState = { message: null, error: {} };
+  const initialState: PasswordState = { status: "", message: null, errors: {} };
   const [state, formAction, isPending] = useActionState(
-    changePassword,
+    updatePassword,
     initialState
   );
 
@@ -32,13 +32,25 @@ export default function PasswordForm({ userId }: { userId: string }) {
         <div className="space-y-4">
           {/* Current Password */}
 
-          <div className="mt-4">
-            <label
-              className="mb-3 mt-5 block text-sm font-medium text-gray-900"
-              htmlFor="currentPassword"
-            >
-              Current Password
-            </label>
+          <div className="mt-4 ">
+            <div className="flex justify-between items-center">
+              <label
+                className="mb-3 mt-5 block text-sm font-medium text-gray-900"
+                htmlFor="currentPassword"
+              >
+                Current Password
+              </label>
+              <div className="text-sm text-error">
+                {state.errors?.currentPassword && (
+                  <div className="">
+                    {state.errors.currentPassword.map((error, index) => (
+                      <p key={index}>{error}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
             <div className="relative">
               <input
                 className="peer block w-full rounded-md border border-cardBg py-[9px] pl-10 text-sm outline placeholder:text-gray-500"
@@ -65,12 +77,24 @@ export default function PasswordForm({ userId }: { userId: string }) {
 
           {/* New Password */}
           <div className="mt-4">
-            <label
-              className="mb-3 mt-5 block text-sm font-medium text-gray-900"
-              htmlFor="newPassword"
-            >
-              New Password
-            </label>
+            <div className="flex justify-between items-center">
+              <label
+                className="mb-3 mt-5 block text-sm font-medium text-gray-900"
+                htmlFor="newPassword"
+              >
+                New Password
+              </label>
+              <div className="text-sm text-error">
+                {state.errors?.newPassword && (
+                  <div className="">
+                    {state.errors.newPassword.map((error, index) => (
+                      <p key={index}>{error}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
             <div className="relative">
               <input
                 className="peer block w-full rounded-md border border-cardBg py-[9px] pl-10 text-sm outline placeholder:text-gray-500"
@@ -95,12 +119,24 @@ export default function PasswordForm({ userId }: { userId: string }) {
 
           {/* Confirm Password */}
           <div className="mt-4">
-            <label
-              className="mb-3 mt-5 block text-sm font-medium text-gray-900"
-              htmlFor="confirmPassword"
-            >
-              Confirm Password
-            </label>
+            <div className="flex justify-between items-center">
+              <label
+                className="mb-3 mt-5 block text-sm font-medium text-gray-900"
+                htmlFor="confirmPassword"
+              >
+                Confirm Password
+              </label>
+              <div className="text-sm text-error">
+                {state.errors?.confirmPassword && (
+                  <div className="">
+                    {state.errors.confirmPassword.map((error, index) => (
+                      <p key={index}>{error}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
             <div className="relative">
               <input
                 className="peer block w-full rounded-md border border-cardBg py-[9px] pl-10 text-sm outline placeholder:text-gray-500"

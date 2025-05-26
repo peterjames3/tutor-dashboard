@@ -2,8 +2,6 @@
 
 import {
   LayoutDashboard,
-  Users,
-  Calendar,
   BookOpenText,
   PencilRuler,
   Headset,
@@ -16,12 +14,7 @@ import clsx from "clsx";
 // Map of links to display in the side navigation
 const links = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  {
-    name: "Clients",
-    href: "/dashboard/clients",
-    icon: Users,
-  },
-  { name: "Calendar", href: "/dashboard/calendar", icon: Calendar },
+
   { name: "Exam Prep", href: "/dashboard/exam-prep", icon: BookOpenText },
   { name: "Tutoring", href: "/dashboard/tutoring", icon: PencilRuler },
   { name: "Exam Support", href: "/dashboard/exam-support", icon: Headset },
