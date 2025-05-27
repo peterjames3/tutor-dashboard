@@ -8,7 +8,7 @@ export type User = {
   role: string;
   imageurl: string;
 };
-// Client-safe version without sensitive fields
+
 export type SafeUser = Omit<User, "password" | "email">;
 
 export type StudentLevel = "High School" | "A-Level" | "College";
