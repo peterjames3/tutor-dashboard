@@ -164,7 +164,7 @@ export const PasswordSchema = z
     message: "Passwords don't match",
     path: ["confirmPassword"],
   })
-  // Add this new refinement to prevent same password
+
   .refine((data) => data.newPassword !== data.currentPassword, {
     message: "New password must be different from current password",
     path: ["newPassword"],

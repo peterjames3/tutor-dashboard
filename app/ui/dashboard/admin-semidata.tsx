@@ -37,8 +37,8 @@ export default function AdminSemidata() {
         />
         <div className="flex flex-col text-error">
           <p className="text-label font-semibold text-primary">
-            {/* Error: {error} */}
-            Essie K
+            Error: {error}
+            {/* Essie K */}
           </p>
         </div>
       </div>

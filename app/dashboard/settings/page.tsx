@@ -42,7 +42,7 @@ export default async function Page() {
           <CardWrapper />
         </div>
       </div>
-      {/* <AdminInfo /> */}
+  
     </section>
   );
 }
