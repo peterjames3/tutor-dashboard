@@ -9,12 +9,7 @@ export const metadata: Metadata = {
   title: "Edit Exam Prep Student",
 };
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
 
   const [studentData, assistants] = await Promise.all([
