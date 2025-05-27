@@ -5,7 +5,13 @@ import { sql } from "@vercel/postgres";
 //   ExamPrepStudent,
 //   EndToEndSupportStudent,
 // } from "./definitions";
-import { ExamSupportForm, User, Student, StudentBasic } from "./definitions";
+import {
+  ExamSupportForm,
+  User,
+  Student,
+  StudentBasic,
+  TutoringForm,
+} from "./definitions";
 
 export const fetchUser = async () => {
   try {
@@ -221,7 +227,7 @@ export async function fetchFilteredTutoring(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const students = await sql`
+    const students = await sql<TutoringForm>`
       SELECT
         id,
         name,
@@ -278,7 +284,7 @@ export async function fetchTutoringPages(query: string) {
 
 export async function fetchTutoringById(id: string) {
   try {
-    const data = await sql`
+    const data = await sql<TutoringForm>`
       SELECT
         id,
         name,
