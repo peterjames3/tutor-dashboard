@@ -15,13 +15,12 @@ export const metadata: Metadata = {
 export default async function Page({
   searchParams,
 }: {
-  searchParams?: {
-    query?: string;
-    page?: string;
-  };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }) {
-  const query = searchParams?.query || "";
-  const currentPage = Number(searchParams?.page) || 1;
+  const query =
+    typeof searchParams?.query === "string" ? searchParams.query : "";
+  const currentPage =
+    typeof searchParams?.page === "string" ? Number(searchParams.page) : 1;
 
   const totalPagesResult = await fetchExamSupportPages(query);
   const totalPages =
