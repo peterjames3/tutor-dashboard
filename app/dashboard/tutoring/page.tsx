@@ -15,16 +15,22 @@ export const metadata: Metadata = {
 export default async function Page({
   searchParams,
 }: {
-  searchParams?: {
-    query?: string;
-    page?: string;
-  };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const query = searchParams?.query || "";
-  const currentPage = Number(searchParams?.page) || 1;
+  const resolvedSearchParams = await searchParams;
+
+  const query =
+    typeof resolvedSearchParams.query === "string"
+      ? resolvedSearchParams.query
+      : "";
+  const currentPage =
+    typeof resolvedSearchParams.page === "string"
+      ? Number(resolvedSearchParams.page)
+      : 1;
 
   const totalPagesResult = await fetchTutoringPages(query);
-  const totalPages = typeof totalPagesResult === "number" ? totalPagesResult : 0;
+  const totalPages =
+    typeof totalPagesResult === "number" ? totalPagesResult : 0;
   return (
     <div>
       <header className="mb-4 space-y-4">
