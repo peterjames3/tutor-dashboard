@@ -65,8 +65,23 @@ export type ExamPrepForm = {
   exam_date: string;
   assistant: string;
   status: StudentStatus;
+  
   support_type: string;
 };
+
+export  type TutoringForm ={
+  id?: string;
+  name: string;
+  email: string;
+  phone_number: string;
+  level: StudentLevel;
+  subject_help: string;
+  start_date: string;
+  assistant: string;
+  status: StudentStatus;
+  
+  support_type: SupportType;
+}
 
 export interface ExamSupportForm {
   id: string;

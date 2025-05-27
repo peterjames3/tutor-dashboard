@@ -1,6 +1,6 @@
 "use client";
 
-import { AssistantField, ExamPrepForm } from "@/app/lib/definitions";
+import { AssistantField, TutoringForm } from "@/app/lib/definitions";
 import {
   Clock,
   CheckCircle2,
@@ -10,16 +10,20 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/app/ui/button";
-import { updateTutoring, State } from "@/app/lib/actions";
+import { updateTutoring } from "@/app/lib/actions";
+import { State } from "@/app/lib/definitions";
 import { useActionState } from "react";
 
 export default function EditExamPrepForm({
   student,
 }: {
-  student: ExamPrepForm;
+  student: TutoringForm;
   assistants: AssistantField[];
 }) {
   const initialState: State = { message: null, errors: {} };
+  if (!student.id) {
+    throw new Error("Student ID is required for updating exam prep.");
+  }
   const updateTutoringWithId = updateTutoring.bind(null, student.id);
   const [state, formAction, isPending] = useActionState(
     updateTutoringWithId,

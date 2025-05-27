@@ -20,7 +20,9 @@ export default async function Page({ params }: { params: Params }) {
   if (!studentData) {
     notFound();
   }
-
+console.log("Params:", params);
+console.log("Student Data:", studentData);
+console.log("Assistants:", assistants);
   return (
     <main>
       <Breadcrumbs

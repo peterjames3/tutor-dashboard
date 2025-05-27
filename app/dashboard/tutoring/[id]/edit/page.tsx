@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Edit Exam Prep Student",
+  title: "Edit Tutoring  Student",
 };
 type Params = Promise<{ id: string }>;
 export default async function Page({ params }: { params: Params }) {
