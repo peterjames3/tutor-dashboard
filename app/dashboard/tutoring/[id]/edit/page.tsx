@@ -7,9 +7,9 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Edit Exam Prep Student",
 };
-
-export default async function Page({ params }: { params: { id: string } }) {
-  const id = params.id;
+type Params = Promise<{ id: string }>;
+export default async function Page({ params }: { params: Params }) {
+  const { id } = await params;
 
   const [studentData, assistants] = await Promise.all([
     fetchTutoringById(id),

@@ -8,8 +8,9 @@ export const metadata: Metadata = {
   title: "Edit Exam Support Student",
 };
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const id = params.id;
+type Params = Promise<{ id: string }>;
+export default async function Page({ params }: { params: Params }) {
+  const {id} =  await params;
 
   const [studentData] = await Promise.all([
     fetchExamSupportById(id),
