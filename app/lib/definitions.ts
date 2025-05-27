@@ -17,11 +17,32 @@ export type StudentStatus = "Pending" | "In Progress" | "Completed";
 
 export type SupportType = "Tutoring" | "Exam Prep" | "End-to-End Exam Support";
 
+export type Student = {
+  id: string;
+  name: string;
+  email: string;
+  phone_number: string;
+  level: StudentLevel;
+  exam: string;
+  subject: string;
+  exam_date: string;
+
+  assistant: string;
+  status: StudentStatus;
+  support_type: string;
+};
+
+export type StudentBasic = {
+  id: string;
+  name: string;
+};
+
 export interface BaseStudent {
   name: string;
   email: string;
   phone: string;
   level: StudentLevel;
+  subject_help: string;
   startDate: Date;
   subjectHelp: string;
   assistant?: string; // assigned from frontend
@@ -33,20 +54,18 @@ export type AssistantField = {
   id: string;
   name: string;
 };
-
 export type ExamPrepForm = {
-  id: string;
+  id?: string;
   name: string;
   email: string;
-  phone: string;
+  phone_number: string;
   level: StudentLevel;
-  startDate: Date;
-  subjectHelp: string;
-  assistant?: string;
-  status: StudentStatus;
-  supportType: "Exam Prep";
   exam: string;
-  exam_date: Date;
+  subject: string;
+  exam_date: string;
+  assistant: string;
+  status: StudentStatus;
+  support_type: string;
 };
 
 export interface ExamSupportForm {

@@ -21,6 +21,9 @@ export default function EditExamPrepForm({
   assistants: AssistantField[];
 }) {
   const initialState: State = { message: null, errors: {} };
+  if (!student.id) {
+    throw new Error("Student ID is required for updating exam prep.");
+  }
   const updateExamPrepWithId = updateExamPrep.bind(null, student.id);
   const [state, formAction, isPending] = useActionState(
     updateExamPrepWithId,
@@ -43,6 +46,7 @@ export default function EditExamPrepForm({
             <div>
               <p className="font-medium">{student.name}</p>
               <p className="text-sm text-gray-500">{student.email}</p>
+              <p className="text-sm text-gray-500">{student.phone_number}</p>
             </div>
           </div>
         </div>

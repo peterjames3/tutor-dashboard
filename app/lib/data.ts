@@ -5,7 +5,7 @@ import { sql } from "@vercel/postgres";
 //   ExamPrepStudent,
 //   EndToEndSupportStudent,
 // } from "./definitions";
-import { ExamSupportForm, User } from "./definitions";
+import { ExamSupportForm, User, Student, StudentBasic } from "./definitions";
 
 export const fetchUser = async () => {
   try {
@@ -169,9 +169,11 @@ export async function fetchExamPrepPages(query: string) {
   }
 }
 
-export async function fetchExamPrepById(id: string) {
+export async function fetchExamPrepById(
+  id: string
+): Promise<Student | undefined> {
   try {
-    const data = await sql`
+    const data = await sql<Student>` 
       SELECT
         id,
         name,
@@ -200,9 +202,9 @@ export async function fetchExamPrepById(id: string) {
   }
 }
 
-export async function fetchStudents() {
+export async function fetchStudents(): Promise<StudentBasic[]> {
   try {
-    const data = await sql`
+    const data = await sql<StudentBasic>`
       SELECT id, name FROM exam_prep_students ORDER BY name;
     `;
     return data.rows;

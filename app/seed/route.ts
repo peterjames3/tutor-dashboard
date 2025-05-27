@@ -99,11 +99,15 @@ async function seedExamPrepStudents(client: SQLClient) {
           name, email, phone_number, level, exam, subject,
           exam_date, assistant, status, support_type
         ) VALUES (
-          ${student.name}, ${student.email}, ${student.phone},
-          ${student.level}, ${student.exam}, ${student.subjectHelp},
-          ${student.examDate.toISOString()}, ${student.assistant}, ${
-        student.status
-      },
+          ${student.name}, 
+          ${student.email}, 
+          ${student.phone},
+          ${student.level}, 
+          ${student.exam}, 
+          ${student.subjectHelp},  // This should match your seed data structure
+          ${student.examDate.toISOString()}, 
+          ${student.assistant}, 
+          ${student.status},
           ${student.supportType}
         )
         ON CONFLICT DO NOTHING;
@@ -111,7 +115,6 @@ async function seedExamPrepStudents(client: SQLClient) {
     })
   );
 }
-
 async function seedEndToEndSupportStudents(client: SQLClient) {
   await client.sql`
     CREATE TABLE IF NOT EXISTS end_to_end_support_students (
