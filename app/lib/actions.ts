@@ -72,7 +72,7 @@ export async function updateProfile(
     };
   }
 }
-// In your actions file
+
 export const updatePassword = async (
   prevState: PasswordState,
   formData: FormData
