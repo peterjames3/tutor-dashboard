@@ -1,5 +1,6 @@
-import { GraduationCap } from "lucide-react";
+import { GraduationCap, Loader2 } from "lucide-react";
 import LoginForm from "@/app/ui/login-form";
+import { Suspense } from "react";
 import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Login",
@@ -18,7 +19,16 @@ export default function LoginPage() {
             </div>
           </div>
         </div>
-        <LoginForm />
+        <Suspense
+          fallback={
+            <div className="flex gap-2 ">
+              <Loader2 size={84} className="text-secondary font-semibold" />{" "}
+              Loading..
+            </div>
+          }
+        >
+          <LoginForm />
+        </Suspense>
       </div>
     </main>
   );
