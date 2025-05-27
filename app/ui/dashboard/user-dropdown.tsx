@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Settings, LogOut } from "lucide-react";
+import { Settings } from "lucide-react";
+import Logout from "@/app/ui/dashboard/logout";
 export default function UserDropdown() {
   const links = [
     { name: "Settings", href: "/dashboard/settings", Icon: Settings },
@@ -21,8 +22,7 @@ export default function UserDropdown() {
           </Link>
         ))}
         <div className="border-t p-4 text-error border-notification-hovered flex gap-2 items-center hover:bg-notification-hovered cursor-pointer rounded-b-lg">
-          <LogOut className="text-error" />
-          Logout
+          <Logout />
         </div>
       </ul>
     </div>
