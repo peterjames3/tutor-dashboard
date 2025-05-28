@@ -7,6 +7,7 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
+import { signOut } from "@/auth";
 import {
   FormSchema,
   ProfileSchema,
@@ -36,6 +37,10 @@ export async function authenticate(
     throw error;
   }
 }
+export async function logoutAction() {
+  await signOut({ redirectTo: "/" });
+}
+
 export async function updateProfile(
   prevState: ProfileState,
   formData: FormData

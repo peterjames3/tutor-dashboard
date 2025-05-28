@@ -1,29 +1,18 @@
-// admin-semidata.tsx - Update component with error handling
+// app/dashboard/components/AdminSemidata.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 import Image from "next/image";
 import { fetchUser } from "@/app/lib/data";
 import { User } from "@/app/lib/definitions";
 
 export default function AdminSemidata() {
-  const [users, setUsers] = useState<User[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const {
+    data: users,
+    error,
+    isLoading,
+  } = useSWR<User[]>("adminUser", fetchUser);
 
-  useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const data = await fetchUser();
-        setUsers(data);
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "Failed to load user data"
-        );
-      }
-    };
-
-    loadUser();
-  }, []);
 
   if (error) {
     return (
@@ -37,15 +26,14 @@ export default function AdminSemidata() {
         />
         <div className="flex flex-col text-error">
           <p className="text-label font-semibold text-primary">
-            Error: {error}
-            {/* Essie K */}
+            Error: {error.message}
           </p>
         </div>
       </div>
     );
   }
 
-  if (!users || users.length === 0) {
+  if (isLoading || !users || users.length === 0) {
     return (
       <div className="flex items-center gap-2">
         <Image
@@ -56,15 +44,17 @@ export default function AdminSemidata() {
           className="w-10 h-10 rounded-full"
         />
         <div className="flex flex-col">
-          <h2 className="text-label font-semibold text-primary">Loading...</h2>
+          <h2 className="text-label font-semibold text-primary">
+            {isLoading ? "Loading..." : "No users found"}
+          </h2>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="">
-      {users.map((user) => (
+    <div>
+      {users.map((user: User) => (
         <div key={user.id} className="flex items-center gap-2">
           <Image
             src={user.imageurl || "/image-avatar.png"}

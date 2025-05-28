@@ -7,7 +7,7 @@ export default function UserDropdown() {
   ];
 
   return (
-    <div className="absolute right-0 top-14 w-[190px] bg-cardBg border-b border-notification-hovered rounded-lg shadow-lg">
+    <div className="absolute right-0 top-16 w-[190px] bg-cardBg border-b border-notification-hovered rounded-lg shadow-lg">
       <ul className="flex flex-col ">
         {links.map((link) => (
           <Link
@@ -21,7 +21,7 @@ export default function UserDropdown() {
             </span>
           </Link>
         ))}
-        <div className="border-t p-4 text-error border-notification-hovered flex gap-2 items-center hover:bg-notification-hovered cursor-pointer rounded-b-lg">
+        <div className="border-t px-4 text-error border-notification-hovered hover:bg-notification-hovered flex gap-2 items-center   rounded-b-lg">
           <Logout />
         </div>
       </ul>
