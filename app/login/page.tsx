@@ -16,7 +16,8 @@ export default async function LoginPage() {
 
   // if (session) {
   //   redirect("/dashboard");
-  // }
+  // } 
+  
 
   return (
     <main className="flex items-center justify-center h-screen bg-background">

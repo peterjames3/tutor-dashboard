@@ -1,5 +1,6 @@
 import SideNav from "@/app/ui/dashboard/sidenav";
 import Navbar from "@/app/ui/dashboard/navbar";
+//setting  partial prerending to true
 export const experimental_ppr = true;
 
 export default function Layout({ children }: { children: React.ReactNode }) {
