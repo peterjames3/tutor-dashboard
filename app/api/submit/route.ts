@@ -18,7 +18,7 @@ const StudentSchema = z.object({
   exam_date: z.string().optional(),
 
   // For Tutoring
-  subject_help: z.string().optional(),
+  //subject_help: z.string().optional(),
   start_date: z.string().optional(),
 });
 
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
       exam,
       subject,
       exam_date,
-      subject_help,
+
       start_date,
     } = parsed.data;
 
