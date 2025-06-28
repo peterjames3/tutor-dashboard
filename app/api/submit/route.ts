@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
+export async function GET() {
+  return new Response(JSON.stringify({ message: "Submit get Api end point" }), {
+    headers: { "Content-Type": "application/json" },
+  });
+}
 
 export async function POST(req: Request) {
   try {
