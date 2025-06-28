@@ -22,6 +22,11 @@ const StudentSchema = z.object({
   start_date: z.string().optional(),
 });
 
+export async function GET() {
+  return NextResponse.json({
+    message: "POST endpoint for submitting student info",
+  });
+}
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -69,7 +74,7 @@ export async function POST(req: Request) {
         )
         VALUES (
           ${name}, ${email}, ${phone_number}, ${level},
-          ${subject_help}, ${subject}, ${start_date}, ${assistant}, ${status}, ${support_type}
+           ${subject}, ${start_date}, ${assistant}, ${status}, ${support_type}
         )
       `;
     } else if (support_type === "End to End Exam Support") {
