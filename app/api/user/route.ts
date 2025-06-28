@@ -3,7 +3,7 @@ import { sql } from "@vercel/postgres";
 
 export async function GET() {
   try {
-    const result = await sql`SELECT name, email FROM users`;
+    const result = await sql`SELECT name, email, level FROM exam_prep_students`;
     return NextResponse.json({ data: result.rows });
   } catch (error: unknown) {
     console.error("❌ Failed to fetch user:");
