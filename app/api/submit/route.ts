@@ -70,7 +70,7 @@ export async function POST(req: Request) {
     } else if (support_type === "Tutoring") {
       await sql`
         INSERT INTO tutoring_students (
-          name, email, phone_number, level, subject_help, subject, start_date, assistant, status, support_type
+          name, email, phone_number, level, subject, start_date, assistant, status, support_type
         )
         VALUES (
           ${name}, ${email}, ${phone_number}, ${level},
