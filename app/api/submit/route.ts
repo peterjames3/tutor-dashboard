@@ -1,22 +1,5 @@
 import { NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
-// export async function GET() {
-//   return new Response(JSON.stringify({ message: "Submit get Api end point" }), {
-//     headers: { "Content-Type": "application/json" },
-//   });
-// }
-export async function GET() {
-  try {
-    const result = await sql`SELECT * FROM exam_prep_students LIMIT 5`;
-    return NextResponse.json({ data: result.rows });
-  } catch (error) {
-    console.error("Failed to fetch exam prep students:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch exam prep students" },
-      { status: 500 }
-    );
-  }
-}
 
 export async function POST(req: Request) {
   try {
