@@ -22,13 +22,28 @@ const StudentSchema = z.object({
   start_date: z.string().optional(),
 });
 
+//CORS headers configuration
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "https://tutor-website-e2o5.vercel.app",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
 export async function GET() {
-  return NextResponse.json({
-    message: "POST endpoint for submitting student info",
-  });
+  return NextResponse.json(
+    { message: "POST endpoint for submitting student info" },
+    { headers: corsHeaders }
+  );
+}
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
 }
 export async function POST(req: Request) {
   try {
+    // Handle OPTIONS request
+    if (req.method === "OPTIONS") {
+      return NextResponse.json({}, { headers: corsHeaders });
+    }
     const body = await req.json();
     const parsed = StudentSchema.safeParse(body);
 
