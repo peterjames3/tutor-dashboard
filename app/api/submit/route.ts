@@ -40,10 +40,6 @@ export async function OPTIONS() {
 }
 export async function POST(req: Request) {
   try {
-    // Handle OPTIONS request
-    if (req.method === "OPTIONS") {
-      return NextResponse.json({}, { headers: corsHeaders });
-    }
     const body = await req.json();
     const parsed = StudentSchema.safeParse(body);
 
@@ -53,7 +49,7 @@ export async function POST(req: Request) {
           error: "Validation failed",
           details: parsed.error.flatten().fieldErrors,
         },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       );
     }
 
@@ -68,7 +64,6 @@ export async function POST(req: Request) {
       exam,
       subject,
       exam_date,
-
       start_date,
     } = parsed.data;
 
@@ -104,7 +99,7 @@ export async function POST(req: Request) {
       `;
     }
 
-    return NextResponse.json({ success: true }, { status: 201 });
+    return NextResponse.json({ success: true }, { status: 201, headers: corsHeaders });
   } catch (error) {
     console.error("Form submission failed:", error);
     return NextResponse.json(
@@ -113,7 +108,7 @@ export async function POST(req: Request) {
         message:
           error instanceof Error ? error.message : "Unknown error occurred",
       },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     );
   }
 }
