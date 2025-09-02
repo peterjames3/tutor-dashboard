@@ -24,7 +24,7 @@ const StudentSchema = z.object({
 
 //CORS headers configuration
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "https://tutor-website-e2o5.vercel.app",
+  "Access-Control-Allow-Origin": "https://testhelpnow.com",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
