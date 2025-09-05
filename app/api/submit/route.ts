@@ -117,7 +117,7 @@ export async function POST(req: Request) {
       <p style="font-size: 15px; margin: 8px 0;"><strong>Email:</strong> ${email}</p>
       <p style="font-size: 15px; margin: 8px 0;"><strong>Phone:</strong> ${phone_number}</p>
       <p style="font-size: 15px; margin: 8px 0;"><strong>Level:</strong> ${level}</p>
-      <a href='https://tutor-dashboard-self.vercel.app/' target='_blank' style="font-size: 15px; margin: 8px 0;"><strong>View Notification</strong> Dashboard</a>
+  
 
       <div style="margin: 20px 0; text-align: center;">
         <a href="mailto:${email}?subject=${encodeURIComponent(
@@ -127,6 +127,10 @@ export async function POST(req: Request) {
       )}" 
            style="display: inline-block; padding: 10px 20px; background-color: #27ae60; color: #fff; text-decoration: none; border-radius: 6px; font-weight: bold;">
            📧 Reply to Student
+        </a>
+         <a href='https://tutor-dashboard-self.vercel.app/' target='_blank' 
+           style="display: inline-block; padding: 10px 20px; background-color: #2980b9; color: #fff; text-decoration: none; border-radius: 6px; font-weight: bold;">
+           📊 View in Dashboard
         </a>
       </div>
 
