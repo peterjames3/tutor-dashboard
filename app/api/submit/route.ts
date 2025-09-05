@@ -152,7 +152,7 @@ export async function POST(req: Request) {
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 8px; background: #ffffff;">
       <h2 style="color: #27ae60;">Hello ${name},</h2>
       <p style="font-size: 15px;">Thank you for submitting your application for <strong>${support_type}</strong>.</p>
-      <p style="font-size: 15px;">One of our assistants (<strong>${assistant}</strong>) will review your details and contact you shortly.</p>
+      <p style="font-size: 15px;">One of our assistants <strong>${assistant}</strong> will review your details and contact you shortly.</p>
       <p style="font-size: 15px;">If you have any urgent questions, you can reply to this email, or reach us at 
         <a href="mailto:info@testhelpnow.com" style="color:#2980b9;">info@testhelpnow.com</a>.
       </p>
