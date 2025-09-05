@@ -107,7 +107,7 @@ export async function POST(req: Request) {
     // ✅ 1. Send notification to admin
     await transporter.sendMail({
       from: `"TestHelpNow" <${process.env.EMAIL_USER}>`,
-      to: "info@testhelpnow.com, testprep952@gmail.com, RLD9Nc7vvjQm2s@dkimvalidator.com",
+      to: email,
       subject: `📩 New Student Application - ${support_type}`,
       html: `
         <h2>New Application Received</h2>
