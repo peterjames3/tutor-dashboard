@@ -117,6 +117,7 @@ export async function POST(req: Request) {
       <p style="font-size: 15px; margin: 8px 0;"><strong>Email:</strong> ${email}</p>
       <p style="font-size: 15px; margin: 8px 0;"><strong>Phone:</strong> ${phone_number}</p>
       <p style="font-size: 15px; margin: 8px 0;"><strong>Level:</strong> ${level}</p>
+      <a href='https://tutor-dashboard-self.vercel.app/' target='_blank' style="font-size: 15px; margin: 8px 0;"><strong>View Notification</strong> Dashboard</a>
 
       <div style="margin: 20px 0; text-align: center;">
         <a href="mailto:${email}?subject=${encodeURIComponent(
