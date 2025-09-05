@@ -24,8 +24,8 @@ const allowedOrigins = [
   "http://localhost:3000",
 ];
 const corsHeaders = {
-   "Access-Control-Allow-Origin": allowedOrigins.join(", "),
-  "Access-control-Allow-origin" :"http://localhost:3000",
+   "Access-Control-Allow-Origin":   "https://testhelpnow.com",
+
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
