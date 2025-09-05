@@ -110,11 +110,30 @@ export async function POST(req: Request) {
       to: "info@testhelpnow.com, testprep952@gmail.com",
       subject: `📩 New Student Application - ${support_type}`,
       html: `
-        <h2>New Application Received</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone_number}</p>
-        <p><strong>Level:</strong> ${level}</p>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 8px; background: #fafafa;">
+      <h2 style="color: #2c3e50; margin-bottom: 15px;">📩 New Application Received</h2>
+      
+      <p style="font-size: 15px; margin: 8px 0;"><strong>Name:</strong> ${name}</p>
+      <p style="font-size: 15px; margin: 8px 0;"><strong>Email:</strong> ${email}</p>
+      <p style="font-size: 15px; margin: 8px 0;"><strong>Phone:</strong> ${phone_number}</p>
+      <p style="font-size: 15px; margin: 8px 0;"><strong>Level:</strong> ${level}</p>
+
+      <div style="margin: 20px 0; text-align: center;">
+        <a href="mailto:${email}?subject=${encodeURIComponent(
+        `Re: Your Application for ${support_type}`
+      )}&body=${encodeURIComponent(
+        `Hello ${name},\n\nThank you for your application for ${support_type}. We have received your details and one of our assistants will contact you shortly.\n\nBest regards,\nTestHelpNow Team`
+      )}" 
+           style="display: inline-block; padding: 10px 20px; background-color: #27ae60; color: #fff; text-decoration: none; border-radius: 6px; font-weight: bold;">
+           📧 Reply to Student
+        </a>
+      </div>
+
+      <hr style="margin: 20px 0;"/>
+      <p style="font-size: 13px; color: #888; text-align: center;">
+        This is an automated notification from <strong>TestHelpNow</strong>.
+      </p>
+    </div>
       
       `,
     });
@@ -125,13 +144,23 @@ export async function POST(req: Request) {
       to: email,
       subject: "✅ We received your application",
       html: `
-        <h2>Hello ${name},</h2>
-        <p>Thank you for submitting your application for <strong>${support_type}</strong>.</p>
-        <p>One of our assistants (${assistant}) will review your details and contact you shortly.</p>
-        <p>If you have any urgent questions, reply to this email or call us directly.</p>
-        <br/>
-        <p>Best regards,</p>
-        <p><strong>TestHelpNow Team</strong></p>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 8px; background: #ffffff;">
+      <h2 style="color: #27ae60;">Hello ${name},</h2>
+      <p style="font-size: 15px;">Thank you for submitting your application for <strong>${support_type}</strong>.</p>
+      <p style="font-size: 15px;">One of our assistants (<strong>${assistant}</strong>) will review your details and contact you shortly.</p>
+      <p style="font-size: 15px;">If you have any urgent questions, you can reply to this email, or reach us at 
+        <a href="mailto:info@testhelpnow.com" style="color:#2980b9;">info@testhelpnow.com</a>.
+      </p>
+
+      <br/>
+      <p style="margin: 0; font-size: 15px;">Best regards,</p>
+      <p style="margin: 0; font-weight: bold; font-size: 16px; color: #2c3e50;">TestHelpNow Team</p>
+      <br/>
+
+      <footer style="margin-top: 20px; font-size: 12px; color: #888; border-top: 1px solid #eee; padding-top: 10px;">
+        © ${new Date().getFullYear()} TestHelpNow. All rights reserved.  
+      </footer>
+    </div>
       `,
     });
 
