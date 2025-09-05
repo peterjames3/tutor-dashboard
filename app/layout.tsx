@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
   robots: "index, follow",
   openGraph: {
-    title: "Edusion | Academic Tutoring & Exam Support Services",
+    title: "TestHelpNow | Academic Tutoring & Exam Support Services",
     description:
       "Get expert tutoring, targeted exam preparation, and end-to-end academic support. Edusion helps students in the US, UK, Canada, and New Zealand excel in their studies and exams.",
     url: "https://tutor-dashboard-self.vercel.app",

@@ -7,7 +7,7 @@ export default function Page() {
     <main className="flex min-h-screen flex-col p-6">
       <div className="flex h-20 shrink-0 items-end rounded-lg bg-[#041107] text-3xl font-semibold text-background p-4 md:h-52">
         <div className="flex gap-2 items-center">
-          <GraduationCap size={64} className="pr-2  " /> Edusion
+          <GraduationCap size={64} className="pr-2  " /> TestHelpNow
         </div>
       </div>
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row font-poppins ">
