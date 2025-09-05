@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Edusion | Tutoring, Exam Prep & Exam Support Services",
+  title: "TestHelpNow | Tutoring, Exam Prep & Exam Support Services",
   description:
     "Edusion is your trusted partner in academic success. We provide personalized tutoring, structured exam preparation, and full end-to-end support for students in the US, UK, Canada, and New Zealand.",
 
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Edusion | Academic Tutoring & Exam Support Services",
     description:
       "Get expert tutoring, targeted exam preparation, and end-to-end academic support. Edusion helps students in the US, UK, Canada, and New Zealand excel in their studies and exams.",
-    url: "https://youredusiondomain.com",
+    url: "https://tutor-dashboard-self.vercel.app",
     type: "website",
     locale: "en_US",
     siteName: "Edusion",

@@ -11,7 +11,7 @@ export default function SideNav() {
         href="/"
       >
         <div className="w-full text-white  flex text-3xl items-center gap-5 font-semibold">
-          <GraduationCap size={64} /> Edusion
+          <GraduationCap size={64} /> TestHelpNow
         </div>
       </Link>
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">

@@ -16,10 +16,10 @@ export default function Page() {
           <p className=" sm:headline md:text-4xl/12 ">
             <strong>
               {" "}
-              <span className="text-secondary"> At Edusion Tutor,</span> we
+              <span className="text-secondary"> At TestHelpNow,</span> we
               provide
               <span className=""> comprehensive exam</span>,{" "}
-              <span>tutoring</span> and <span> Full test prep</span>.
+              <span>tutoring</span> and <span> End-To-End Exam support</span>.
             </strong>
           </p>
           <Link
