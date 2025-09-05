@@ -19,10 +19,7 @@ const StudentSchema = z.object({
 });
 
 // ✅ CORS headers
-const allowedOrigins = [
-  "https://testhelpnow.com",
-  "http://localhost:3000",
-];
+
 const corsHeaders = {
    "Access-Control-Allow-Origin":   "https://testhelpnow.com",
 
