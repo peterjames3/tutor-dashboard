@@ -111,7 +111,7 @@ export async function POST(req: Request) {
       subject: `📩 New Student Application - ${support_type}`,
       html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 8px; background: #fafafa;">
-      <h2 style="color: #2c3e50; margin-bottom: 15px;">📩 New Application Received</h2>
+      <h2 style="color: #2c3e50; margin-bottom: 15px;"> Student details</h2>
       
       <p style="font-size: 15px; margin: 8px 0;"><strong>Name:</strong> ${name}</p>
       <p style="font-size: 15px; margin: 8px 0;"><strong>Email:</strong> ${email}</p>
